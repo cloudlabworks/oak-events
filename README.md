@@ -161,9 +161,10 @@ explaining why: `not_found`, `error`, `pipeline_stopped`.
 - **Bootloader:** RVC2 PoE devices with a bootloader older than **0.0.29** can
   fail discovery; 0.0.29 fixes it. `oak-events doctor` shows the version when
   the device is not in use.
-- **The device can take from ~30 s to a few minutes to free up** after a previous host disconnects (2.5 min observed on an OAK-D PoE). `oak-events run` keeps retrying discovery for up to 4 minutes.
-  `run` retries discovery for up to 90 s and asks DepthAI to reconnect up to 5
-  times before giving up.
+- **The device can take from ~30 s to a few minutes to free up** after a
+  previous host disconnects (2.5 min observed on an OAK-D PoE). `oak-events
+  run` retries discovery for up to 4 minutes (240 s), then asks DepthAI to
+  reconnect up to 5 times before giving up.
 - **macOS launchd:** observed, cause not proven: under a launchd job the device
   could fail with `X_LINK_DEVICE_NOT_FOUND` while the same command worked from
   a terminal. Running it under a supervisor process that has macOS
