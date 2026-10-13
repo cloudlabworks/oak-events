@@ -58,3 +58,39 @@ def test_zones_file(tmp_path):
     assert [z.name for z in zones] == ["door", "desk"]
     assert zones[1].z_min_mm == 400 and zones[1].z_max_mm is None
     assert [z.name for z in load_zones(None)] == ["view"]
+
+
+@pytest.mark.parametrize(
+    ("zone", "message"),
+    [
+        ({"name": "door", "z_mm": 500}, "z_mm must be [min, max], each a number or null"),
+        ({"name": "door", "z_mm": ["x", 5]}, "z_mm must be [min, max], each a number or null"),
+        ({"name": "door", "z_mm": [True, 900]}, "z_mm must be [min, max], each a number or null"),
+        ({"name": "door", "bbox": 5}, "bbox must be [x0, y0, x1, y1], four numbers"),
+        ({"name": "door", "bbox": [0, 0, "1", 1]}, "bbox must be [x0, y0, x1, y1], four numbers"),
+        ({"name": "door", "bbox": [0, 0, True, 1]}, "bbox must be [x0, y0, x1, y1], four numbers"),
+    ],
+)
+def test_run_with_malformed_zone_shape_fails_cleanly(tmp_path, capsys, zone, message):
+    zones = tmp_path / "zones.json"
+    zones.write_text(json.dumps({"zones": [zone]}))
+    rc = cli.main(["run", "--model", str(tmp_path / "nope.tar.xz"), "--zones", str(zones)])
+    assert rc == 2
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == f"oak-events: bad zones file: zone 'door': {message}\n"
+
+
+@pytest.mark.parametrize(
+    ("zone", "message"),
+    [
+        ({"name": "door", "z_mm": [1, 2, 3]}, "z_mm must be [min, max]"),
+        ({"name": "door", "bbox": [0, 0, 1]}, "bbox must be [x0, y0, x1, y1]"),
+    ],
+)
+def test_run_keeps_wrong_length_messages(tmp_path, capsys, zone, message):
+    zones = tmp_path / "zones.json"
+    zones.write_text(json.dumps({"zones": [zone]}))
+    rc = cli.main(["run", "--model", str(tmp_path / "nope.tar.xz"), "--zones", str(zones)])
+    assert rc == 2
+    assert capsys.readouterr().err == f"oak-events: bad zones file: zone 'door': {message}\n"

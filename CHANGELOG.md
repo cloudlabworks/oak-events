@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- `oak-events run --zones` now reports a malformed `z_mm` or `bbox` (not a
+  list, non-numeric or boolean values) as a one-line "bad zones file" error
+  naming the zone, with exit code 2, instead of a Python traceback.
+
 ## [0.1.1] - 2026-10-12
 
 ### Changed
