@@ -112,7 +112,7 @@ the colour camera only approximately, so leave some margin.
 | --- | --- |
 | `oak-events run --model PATH [--device-id ID] [--out-dir DIR] [--zones FILE] [--fps 10]` | Run the camera; print events, optionally append to `DIR/YYYY-MM-DD.jsonl` |
 | `oak-events doctor [--json]` | depthai version, visible devices, bootloader advice, privacy env state |
-| `oak-events mcp --events-dir DIR` | MCP stdio server with `recent_events`, `zone_state`, `camera_health` |
+| `oak-events mcp --events-dir DIR [--stale-after SECONDS]` | MCP stdio server with `recent_events`, `zone_state`, `camera_health`; `camera_health` defaults to stale after 900 seconds |
 
 ## Event schema
 

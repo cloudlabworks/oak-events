@@ -148,7 +148,7 @@ def _server_class() -> Any:
         raise RuntimeError(INSTALL_HINT) from exc
 
 
-def build_server(events_dir: str | Path) -> Any:
+def build_server(events_dir: str | Path, stale_after_s: float = 900.0) -> Any:
     """Create the MCP server with the three text-only tools."""
     server_cls = _server_class()
     events_dir = Path(events_dir).expanduser()
@@ -173,10 +173,10 @@ def build_server(events_dir: str | Path) -> Any:
     @server.tool(name="camera_health")
     def camera_health_tool() -> str:
         """Last camera status event and heartbeat, with their age in seconds, as JSON."""
-        return json.dumps(camera_health(events_dir))
+        return json.dumps(camera_health(events_dir, stale_after_s=stale_after_s))
 
     return server
 
 
-def serve(events_dir: str | Path) -> None:
-    build_server(events_dir).run()  # stdio transport
+def serve(events_dir: str | Path, stale_after_s: float = 900.0) -> None:
+    build_server(events_dir, stale_after_s=stale_after_s).run()  # stdio transport
