@@ -103,6 +103,11 @@ class Zone:
         return out
 
 
+def _is_number(value: Any) -> bool:
+    """JSON numbers only: ``True`` / ``False`` are ints in Python but not numbers here."""
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
 def parse_zones(spec: Any) -> list[Zone]:
     """Parse zones from ``{"zones": [...]}`` or a bare list of zone objects.
 
@@ -116,11 +121,23 @@ def parse_zones(spec: Any) -> list[Zone]:
     for item in items:
         if not isinstance(item, dict) or "name" not in item:
             raise ValueError(f"each zone needs a name: {item!r}")
-        z = item.get("z_mm") or [None, None]
+        name = item["name"]
+        z = item.get("z_mm")
+        if z is None:
+            z = [None, None]
+        elif not isinstance(z, list):
+            raise ValueError(f"zone {name!r}: z_mm must be [min, max], each a number or null")
         if len(z) != 2:
-            raise ValueError(f"zone {item['name']!r}: z_mm must be [min, max]")
+            raise ValueError(f"zone {name!r}: z_mm must be [min, max]")
+        if not all(v is None or _is_number(v) for v in z):
+            raise ValueError(f"zone {name!r}: z_mm must be [min, max], each a number or null")
         bbox = item.get("bbox")
-        zones.append(Zone(str(item["name"]), tuple(bbox) if bbox is not None else None, z[0], z[1]))
+        if bbox is not None:
+            # Wrong length is left to Zone, which already reports it.
+            if not isinstance(bbox, list) or (len(bbox) == 4 and not all(_is_number(v) for v in bbox)):
+                raise ValueError(f"zone {name!r}: bbox must be [x0, y0, x1, y1], four numbers")
+            bbox = tuple(bbox)
+        zones.append(Zone(str(name), bbox, z[0], z[1]))
     names = [z.name for z in zones]
     if len(names) != len(set(names)):
         raise ValueError("zone names must be unique")
