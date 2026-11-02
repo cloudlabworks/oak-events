@@ -37,3 +37,10 @@ packages = ["src/oak_events"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+
+[tool.ruff]
+line-length = 130
+
+[tool.ruff.lint]
+# pycodestyle errors/warnings + pyflakes; CI fails on any finding (OpenSSF Best Practices: warnings).
+select = ["E", "F", "W"]
