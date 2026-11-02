@@ -1,0 +1,32 @@
+== systemd systemd 257 (257.13-1~deb13u1)
+== 1. runner service: hash check passes, events written as oak-events, mode 0600
+PASS: privacy event written to /var/lib/oak-events/events/2026-11-02.jsonl
+PASS: privacy state private=true
+PASS: event file owner oak-events, mode 600
+PASS: events dir owner oak-events, mode 700
+PASS: runner got past the model hash check (stopped at missing depthai, expected in this test bed)
+== 2. runner sandbox probe: same [Service] sandbox options, as oak-events
+PASS: runner can write the events directory
+PASS: runner cannot write /etc
+PASS: runner cannot read /home
+PASS: runner cannot gain root
+== 3. runner refuses a wrong model hash
+PASS: mismatch event written, camera not opened
+== 4. MCP server through the sandbox wrapper, started by desktop user alice with sudo
+PASS: camera_health over MCP reports private=true
+PASS: recent_events answered
+PASS: access log has 2 lines
+PASS: access log owner oak-events, mode 600
+PASS: access log: argument size and result count, no values
+PASS: alice cannot read event files directly
+== 5. MCP sandbox probe: same properties as the wrapper
+PASS: MCP sandbox can read events
+PASS: MCP sandbox cannot write the events directory (read-only)
+PASS: MCP sandbox can write its access log directory
+PASS: MCP sandbox cannot read /home
+PASS: MCP sandbox has no network
+PASS: control: the same connect works outside the sandbox, so the network result above is the sandbox's doing
+DEVCOUNT=17
+== 6. exposure scores (systemd-analyze security; lower is better)
+→ Overall exposure level for oak-events-run.service: 1.7 OK :-)
+== RESULT: ALL PASS
