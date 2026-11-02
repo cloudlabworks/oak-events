@@ -8,6 +8,9 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- Security and AI documentation in `docs/`: threat model, model card, data
+  flow and privacy impact, SBOM (CycloneDX) with licence summary. README and
+  `SECURITY.md` link them and the CloudLab Works incident response plan.
 - Configurable `oak-events mcp --stale-after SECONDS` threshold for camera health.
 
 ### Fixed

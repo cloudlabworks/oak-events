@@ -9,6 +9,14 @@ vulnerability**. Do not open a public issue for security problems.
 Include what you found, how to reproduce it, and the impact you expect. You
 should get an acknowledgement within a week.
 
+## How reports are handled
+
+Reports are triaged, fixed and disclosed under the CloudLab Works
+[incident response plan](https://github.com/cloudlabworks/.github/blob/main/policies/incident-response-plan.md),
+which sets severity levels, fix targets and coordinated disclosure timelines.
+The [threat model](docs/THREAT_MODEL.md) lists the threats this project
+defends against.
+
 ## In scope
 
 Anything that breaks the privacy model described in the README, for example:

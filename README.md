@@ -175,6 +175,22 @@ explaining why: `not_found`, `error`, `pipeline_stopped`.
   *System Settings > Privacy & Security > Local Network*.
 - Prefer `--device-id` over addresses; the id survives network changes.
 
+## Security and AI documentation
+
+- [Threat model](docs/THREAT_MODEL.md): trust boundaries, threats (STRIDE,
+  MITRE ATLAS, OWASP LLM Top 10) and residual risk.
+- [Model card](docs/MODEL_CARD.md): the reference detector, its limits,
+  failure modes and open-model risk.
+- [Data flow, retention and privacy impact](docs/DATA_FLOW.md): what leaves
+  the camera, what is stored, retention and redaction.
+- [Software bill of materials](docs/SBOM.md): CycloneDX SBOM and licence
+  summary for 0.1.1.
+- CloudLab Works [security policies](https://github.com/cloudlabworks/.github/tree/main/policies):
+  security baseline, security and AI governance policy (including acceptable
+  use of oak-events) and incident response plan.
+
+Report vulnerabilities as described in [`SECURITY.md`](SECURITY.md).
+
 ## Development
 
 ```bash
