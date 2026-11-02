@@ -53,4 +53,20 @@ def state(environ: MutableMapping[str, str] | None = None) -> dict[str, object]:
     }
 
 
+def event_fields(environ: MutableMapping[str, str] | None = None) -> dict[str, object]:
+    """Flat fields for the ``privacy`` event that ``oak-events run`` emits at startup.
+
+    ``deviations`` names the variables that differ from the private defaults,
+    so a deployer can alert on ``private: false`` without parsing the values.
+    """
+    current = state(environ)
+    env = current["env"]
+    assert isinstance(env, dict)
+    return {
+        "private": current["private"],
+        "telemetry_opt_in": current["opted_in_to_telemetry"],
+        "deviations": sorted(k for k, v in PRIVACY_ENV.items() if env.get(k) != v),
+    }
+
+
 APPLIED = apply()

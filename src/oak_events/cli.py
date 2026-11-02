@@ -48,6 +48,13 @@ def _positive_seconds(value: str) -> float:
     return seconds
 
 
+def _sha256_hex(value: str) -> str:
+    digest = value.strip().lower()
+    if len(digest) != 64 or any(ch not in "0123456789abcdef" for ch in digest):
+        raise argparse.ArgumentTypeError("must be 64 hexadecimal characters (a SHA-256 digest)")
+    return digest
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     from . import camera  # lazy: imports privacy first, depthai only when running
 
@@ -68,6 +75,8 @@ def cmd_run(args: argparse.Namespace) -> int:
             person_label=args.person_label,
             person_confidence=args.person_confidence,
             hold_seconds=args.hold_seconds,
+            model_sha256=args.model_sha256,
+            confidence_stats=args.confidence_stats,
         )
     except camera.CameraUnavailable as exc:
         print(f"oak-events: {exc}", file=sys.stderr)
@@ -138,8 +147,15 @@ def _print_doctor(report: dict) -> None:
 def cmd_mcp(args: argparse.Namespace) -> int:
     from . import mcp_server
 
+    extra: dict[str, object] = {}
+    if args.access_log is not None:
+        try:
+            extra["access_log"] = mcp_server.check_access_log_path(args.events_dir, args.access_log)
+        except ValueError as exc:
+            print(f"oak-events: bad --access-log: {exc}", file=sys.stderr)
+            return 2
     try:
-        mcp_server.serve(args.events_dir, stale_after_s=args.stale_after)
+        mcp_server.serve(args.events_dir, stale_after_s=args.stale_after, **extra)
     except RuntimeError as exc:
         print(f"oak-events: {exc}", file=sys.stderr)
         return 4
@@ -167,6 +183,10 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--person-confidence", type=float, default=0.5, help="minimum confidence (default 0.5)")
     run.add_argument("--hold-seconds", type=float, default=60.0,
                      help="how long a depth change must persist before it is reported (default 60)")
+    run.add_argument("--model-sha256", type=_sha256_hex, metavar="HEX",
+                     help="refuse to start unless the model archive has this SHA-256 (see docs/MODEL_CARD.md)")
+    run.add_argument("--confidence-stats", action="store_true",
+                     help="add per-zone detection-confidence statistics to alive events")
     run.add_argument("--quiet", action="store_true", help="do not echo events to stdout")
     run.set_defaults(func=cmd_run)
 
@@ -178,6 +198,8 @@ def build_parser() -> argparse.ArgumentParser:
     mcp.add_argument("--events-dir", required=True, help="directory written by 'run --out-dir'")
     mcp.add_argument("--stale-after", type=_positive_seconds, default=900.0, metavar="SECONDS",
                      help="mark camera health stale after this many seconds (default 900)")
+    mcp.add_argument("--access-log", metavar="FILE",
+                     help="append one JSON line per tool call to FILE (off by default; outside the events directory)")
     mcp.set_defaults(func=cmd_mcp)
     return parser
 

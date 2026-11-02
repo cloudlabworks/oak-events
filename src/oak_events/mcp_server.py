@@ -8,14 +8,20 @@ The tool logic lives in plain functions (``recent_events``, ``zone_state``,
 ``camera_health``) so it can be used and tested without the ``mcp`` package;
 ``build_server`` wraps them with FastMCP from the official MCP Python SDK
 (``MCPServer`` in mcp 2.x, ``FastMCP`` in mcp 1.x).
+
+With ``--access-log FILE`` every tool call is recorded in ``FILE`` (see
+``AccessLog``). It is off by default.
 """
 
 from __future__ import annotations
 
 import datetime as _dt
 import json
+import os
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any, Callable, Iterator
+
+from .events import make_event
 
 INSTALL_HINT = "the mcp package is not installed. Install the extra: pip install 'oak-events[mcp]'"
 MAX_LIMIT = 500
@@ -106,16 +112,24 @@ def _age_s(ts: str | None, now: _dt.datetime) -> float | None:
 
 def camera_health(events_dir: str | Path, stale_after_s: float = 900.0,
                   now: _dt.datetime | None = None) -> dict[str, Any]:
-    """Latest ``camera`` and ``alive`` events, their age, and a one-word status."""
+    """Latest ``camera`` and ``alive`` events, their age, and a one-word status.
+
+    Also the latest ``privacy`` event and ``private``: ``True`` or ``False``
+    from that event, ``None`` when there is none (older versions do not write it).
+    """
     now = now or _dt.datetime.now().astimezone()
-    last_camera = last_alive = None
+    last_camera = last_alive = last_privacy = None
     for ev in iter_events_newest_first(events_dir, max_files=SCAN_DAYS):
-        if last_camera is None and ev.get("kind") == "camera":
+        kind = ev.get("kind")
+        if last_camera is None and kind == "camera":
             last_camera = ev
-        elif last_alive is None and ev.get("kind") == "alive":
+        elif last_alive is None and kind == "alive":
             last_alive = ev
-        if last_camera and last_alive:
+        elif last_privacy is None and kind == "privacy":
+            last_privacy = ev
+        if last_camera and last_alive and last_privacy:
             break
+    private = last_privacy.get("private") if last_privacy else None
     camera_age = _age_s(last_camera.get("ts") if last_camera else None, now)
     alive_age = _age_s(last_alive.get("ts") if last_alive else None, now)
     ages = [a for a in (camera_age, alive_age) if a is not None]
@@ -137,7 +151,92 @@ def camera_health(events_dir: str | Path, stale_after_s: float = 900.0,
         "last_alive": last_alive,
         "last_alive_age_s": alive_age,
         "stale_after_s": stale_after_s,
+        "last_privacy": last_privacy,
+        "private": private if isinstance(private, bool) else None,
     }
+
+
+# --------------------------------------------------------------------------- access log
+
+
+def _value_size(value: Any) -> int:
+    """Size of an argument value: characters for text, JSON length otherwise, 0 for None."""
+    if value is None:
+        return 0
+    if isinstance(value, str):
+        return len(value)
+    return len(json.dumps(value, default=str))
+
+
+def result_count(tool: str, result: Any) -> int:
+    """How many items a tool returned: events, zones, or (for camera_health) events found."""
+    if tool == "recent_events" and isinstance(result, list):
+        return len(result)
+    if tool == "zone_state" and isinstance(result, dict):
+        return len(result.get("zones") or {})
+    if tool == "camera_health" and isinstance(result, dict):
+        return sum(result.get(k) is not None for k in ("last_camera", "last_alive", "last_privacy"))
+    return 0
+
+
+def check_access_log_path(events_dir: str | Path, path: str | Path) -> Path:
+    """The access log must not live in the events directory, or the tools would serve it as events."""
+    log = Path(path).expanduser().resolve()
+    if log.parent == Path(events_dir).expanduser().resolve():
+        raise ValueError("the access log must be outside the events directory")
+    if log.is_dir():
+        raise ValueError(f"access log path is a directory: {log.name}")
+    return log
+
+
+class AccessLog:
+    """Audit record of MCP tool calls, one JSON line per call, file mode 0600.
+
+    Each line has ``ts``, ``kind`` ``mcp_access``, ``tool``, ``args`` (each
+    argument name with the size of its value), ``result_count``, ``ok``,
+    ``error`` (exception type) when a call failed, and ``client_pid`` (the
+    process that started this stdio server, normally the MCP client).
+    Argument values and results are never written: the log shows that an
+    agent read events, not what it read. The server has no image content.
+    """
+
+    def __init__(self, path: str | Path) -> None:
+        self.path = Path(path).expanduser()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+
+    def record(self, tool: str, args: dict[str, Any], count: int | None, error: str | None = None) -> dict[str, Any]:
+        fields: dict[str, Any] = {
+            "tool": tool,
+            "args": {key: _value_size(value) for key, value in sorted(args.items())},
+            "result_count": count,
+            "ok": error is None,
+            "client_pid": os.getppid(),
+        }
+        if error is not None:
+            fields["error"] = error
+        entry = make_event("mcp_access", **fields)
+        data = (json.dumps(entry, ensure_ascii=False) + "\n").encode("utf-8")
+        fd = os.open(self.path, os.O_WRONLY | os.O_APPEND | os.O_CREAT, 0o600)
+        try:
+            written = os.write(fd, data)
+            while written < len(data):
+                written += os.write(fd, data[written:])
+        finally:
+            os.close(fd)
+        return entry
+
+
+def call_tool(tool: str, fn: Callable[[], Any], args: dict[str, Any], access_log: AccessLog | None = None) -> str:
+    """Run one tool, record it in the access log if there is one, and return its JSON text."""
+    try:
+        result = fn()
+    except Exception as exc:
+        if access_log is not None:
+            access_log.record(tool, args, None, error=type(exc).__name__)
+        raise
+    if access_log is not None:
+        access_log.record(tool, args, result_count(tool, result))
+    return json.dumps(result)
 
 
 def _server_class() -> Any:
@@ -154,10 +253,11 @@ def _server_class() -> Any:
         raise RuntimeError(INSTALL_HINT) from exc
 
 
-def build_server(events_dir: str | Path, stale_after_s: float = 900.0) -> Any:
+def build_server(events_dir: str | Path, stale_after_s: float = 900.0, access_log: str | Path | None = None) -> Any:
     """Create the MCP server with the three text-only tools."""
     server_cls = _server_class()
     events_dir = Path(events_dir).expanduser()
+    log = AccessLog(check_access_log_path(events_dir, access_log)) if access_log is not None else None
     server = server_cls(
         "oak-events",
         instructions=(
@@ -169,20 +269,21 @@ def build_server(events_dir: str | Path, stale_after_s: float = 900.0) -> Any:
     @server.tool(name="recent_events")
     def recent_events_tool(limit: int = 50, kind: str | None = None) -> str:
         """Most recent camera events as JSON (oldest first). Optional kind filter, e.g. person_enter."""
-        return json.dumps(recent_events(events_dir, limit=limit, kind=kind))
+        return call_tool("recent_events", lambda: recent_events(events_dir, limit=limit, kind=kind),
+                         {"limit": limit, "kind": kind}, log)
 
     @server.tool(name="zone_state")
     def zone_state_tool() -> str:
         """Who/what is present per zone, from the latest events, as JSON."""
-        return json.dumps(zone_state(events_dir))
+        return call_tool("zone_state", lambda: zone_state(events_dir), {}, log)
 
     @server.tool(name="camera_health")
     def camera_health_tool() -> str:
         """Last camera status event and heartbeat, with their age in seconds, as JSON."""
-        return json.dumps(camera_health(events_dir, stale_after_s=stale_after_s))
+        return call_tool("camera_health", lambda: camera_health(events_dir, stale_after_s=stale_after_s), {}, log)
 
     return server
 
 
-def serve(events_dir: str | Path, stale_after_s: float = 900.0) -> None:
-    build_server(events_dir, stale_after_s=stale_after_s).run()  # stdio transport
+def serve(events_dir: str | Path, stale_after_s: float = 900.0, access_log: str | Path | None = None) -> None:
+    build_server(events_dir, stale_after_s=stale_after_s, access_log=access_log).run()  # stdio transport
