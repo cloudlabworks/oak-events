@@ -14,6 +14,23 @@ All notable changes to this project are documented here. The format follows
 - Configurable `oak-events mcp --stale-after SECONDS` threshold for camera health.
 - Atheris fuzz harness `fuzz/fuzz_events.py` for zones files and event JSONL
   files, run for 60 s on every push and pull request (`fuzz` workflow).
+- `oak-events run` writes a `privacy` event before DepthAI loads, recording
+  whether the DepthAI privacy defaults hold (`private`), whether telemetry
+  was opted in (`telemetry_opt_in`) and which variables differ
+  (`deviations`). `camera_health` returns the latest one and `private`.
+- `oak-events run --model-sha256 HEX`: refuse to start (exit code 3, camera
+  not opened) when the model archive's SHA-256 differs. The archive's
+  SHA-256 is now recorded in every `camera` `up` event.
+- `oak-events run --confidence-stats`: per-zone detection-confidence
+  statistics (`n`, `mean`, `min`, `max`, `below`) in `alive` events. Off by
+  default.
+- `oak-events mcp --access-log FILE`: optional audit log, one JSON line per
+  tool call (time, tool, argument names and value sizes, result count,
+  outcome, MCP client process id). Never argument values, results or image
+  content. Off by default.
+- `examples/webhook.md`: alerting on privacy and model-integrity events.
+- Fuzz harness also checks the access log's result count and the
+  `camera_health` privacy fields.
 
 ### Changed
 
