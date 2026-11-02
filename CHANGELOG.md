@@ -10,6 +10,12 @@ All notable changes to this project are documented here. The format follows
 
 - Configurable `oak-events mcp --stale-after SECONDS` threshold for camera health.
 
+### Fixed
+
+- `oak-events run --zones` now reports a malformed `z_mm` or `bbox` (not a
+  list, non-numeric or boolean values) as a one-line "bad zones file" error
+  naming the zone, with exit code 2, instead of a Python traceback.
+
 ## [0.1.1] - 2026-10-12
 
 ### Changed
