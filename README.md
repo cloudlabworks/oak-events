@@ -207,9 +207,17 @@ explaining why: `not_found`, `error`, `pipeline_stopped`.
   the camera, what is stored, retention and redaction.
 - [Software bill of materials](docs/SBOM.md): CycloneDX SBOM and licence
   summary for 0.1.1.
+- [Shared responsibility](docs/SHARED_RESPONSIBILITY.md): who owns which
+  security control (CloudLab Works, you, the model provider), per AI-CAIQ
+  question.
+- [Risk assessment](docs/RISK_ASSESSMENT.md): AI risk register and AI impact
+  assessment.
+- [Hardening](docs/HARDENING.md): running oak-events as a dedicated user, with
+  a sandboxed, read-only MCP server.
 - CloudLab Works [security policies](https://github.com/cloudlabworks/.github/tree/main/policies):
   security baseline, security and AI governance policy (including acceptable
-  use of oak-events) and incident response plan.
+  use of oak-events), incident response plan, supply chain policy and the
+  security program index.
 
 Report vulnerabilities as described in [`SECURITY.md`](SECURITY.md).
 
