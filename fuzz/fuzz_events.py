@@ -16,7 +16,9 @@ the file.
 * events: bytes written as a daily JSONL file -> ``recent_events``,
   ``zone_state`` and ``camera_health``. Malformed lines are documented as
   skipped, so no file content may raise, and every result must still be
-  JSON-serialisable (the MCP tools return ``json.dumps`` of it).
+  JSON-serialisable (the MCP tools return ``json.dumps`` of it). The access
+  log's ``result_count`` must accept every result, and ``camera_health``'s
+  ``private`` must be a boolean or ``None`` whatever the ``privacy`` event says.
 
 No camera and no depthai: only the pure modules are imported.
 """
@@ -80,6 +82,9 @@ def check_events(data: bytes) -> None:
     ]
     for result in results:
         json.dumps(result)
+    for tool, result in zip(("recent_events", "recent_events", "zone_state", "camera_health"), results):
+        assert mcp_server.result_count(tool, result) >= 0  # what the access log records
+    assert results[3]["private"] in (True, False, None), results[3]["private"]
     assert results[3]["status"] in ("ok", "stale", "no_data") or results[3]["last_camera"] is not None
 
 
