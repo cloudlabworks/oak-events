@@ -36,11 +36,17 @@ def iter_events_newest_first(events_dir: str | Path, max_files: int | None = Non
         files = files[:max_files]
     for path in files:
         try:
-            lines = path.read_text(encoding="utf-8").splitlines()
+            data = path.read_bytes()
         except OSError:
             continue
-        for line in reversed(lines):
-            line = line.strip()
+        # Split bytes, not text: str.splitlines() also breaks at U+2028 and other
+        # separators that json.dumps(ensure_ascii=False) leaves inside a line.
+        # Decoding per line skips a line with bad UTF-8 instead of the whole file.
+        for raw in reversed(data.splitlines()):
+            try:
+                line = raw.decode("utf-8").strip()
+            except UnicodeDecodeError:
+                continue
             if not line:
                 continue
             try:
@@ -71,7 +77,7 @@ def zone_state(events_dir: str | Path) -> dict[str, Any]:
     for ev in iter_events_newest_first(events_dir, max_files=SCAN_DAYS):
         kind = ev.get("kind")
         zone = ev.get("zone")
-        if not zone or kind not in ("person_enter", "person_exit", "depth_change", "depth_baseline"):
+        if not isinstance(zone, str) or not zone or kind not in ("person_enter", "person_exit", "depth_change", "depth_baseline"):
             continue
         z = zones.setdefault(zone, {})
         if kind in ("person_enter", "person_exit") and "person_present" not in z:
@@ -87,15 +93,15 @@ def zone_state(events_dir: str | Path) -> dict[str, Any]:
 
 
 def _age_s(ts: str | None, now: _dt.datetime) -> float | None:
-    if not ts:
+    if not isinstance(ts, str) or not ts:
         return None
     try:
         t = _dt.datetime.fromisoformat(ts)
-    except ValueError:
+        if t.tzinfo is None:
+            t = t.astimezone()
+        return round((now - t).total_seconds(), 1)
+    except (ValueError, OverflowError):  # not ISO-8601, or too close to year 1 / 9999 to shift
         return None
-    if t.tzinfo is None:
-        t = t.astimezone()
-    return round((now - t).total_seconds(), 1)
 
 
 def camera_health(events_dir: str | Path, stale_after_s: float = 900.0,

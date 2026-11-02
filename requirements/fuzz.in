@@ -1,0 +1,4 @@
+# .github/workflows/fuzz.yml: the Atheris harness in fuzz/ (Python 3.11, Linux x86_64).
+# atheris 3.0.0 is the newest release with a cp311 wheel.
+atheris==3.0.0
+numpy

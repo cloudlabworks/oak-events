@@ -22,6 +22,21 @@ python3 -m venv .venv
 .venv/bin/pytest -q
 ```
 
+CI installs from the hash-pinned lists in `requirements/` instead; see
+`requirements/README.md` to add or update a tool.
+
+The parsing code (zones files, event files) also has an Atheris fuzz harness,
+run for 60 s by the `fuzz` workflow on every push and pull request. Atheris has
+Linux x86_64 wheels only:
+
+```bash
+pip install --require-hashes -r requirements/fuzz.txt
+PYTHONPATH=src python fuzz/fuzz_events.py -dict=fuzz/events.dict -max_total_time=60 fuzz/corpus
+```
+
+A crash writes the input to `crash-*`; add it as a test in
+`tests/test_parsing_robustness.py` with the fix.
+
 Tests must pass **without a camera and without `depthai` installed**; that is
 what CI runs (Ubuntu and macOS, Python 3.11 and 3.13). Put event logic in
 `events.py` (pure, testable with synthetic data) and keep `camera.py` a thin
