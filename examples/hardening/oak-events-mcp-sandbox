@@ -1,0 +1,42 @@
+#!/bin/sh
+# /usr/local/bin/oak-events-mcp-sandbox
+# Start the oak-events MCP server as the oak-events user in a transient, sandboxed
+# systemd unit. stdin and stdout pass through (--pipe), so an MCP client can use
+# "sudo -n /usr/local/bin/oak-events-mcp-sandbox" as its server command.
+# Takes no arguments on purpose: the sudoers rule allows exactly this command.
+# See docs/HARDENING.md in oak-events.
+set -eu
+exec /usr/bin/systemd-run --quiet --pipe --wait --collect \
+  --uid=oak-events --gid=oak-events \
+  -p UMask=0077 \
+  -p LogsDirectory=oak-events \
+  -p LogsDirectoryMode=0700 \
+  -p ProtectSystem=strict \
+  -p ReadOnlyPaths=/var/lib/oak-events \
+  -p ProtectHome=yes \
+  -p PrivateTmp=yes \
+  -p PrivateDevices=yes \
+  -p PrivateNetwork=yes \
+  -p IPAddressDeny=any \
+  -p RestrictAddressFamilies=AF_UNIX \
+  -p NoNewPrivileges=yes \
+  -p CapabilityBoundingSet= \
+  -p RestrictSUIDSGID=yes \
+  -p LockPersonality=yes \
+  -p RestrictRealtime=yes \
+  -p RestrictNamespaces=yes \
+  -p ProtectKernelTunables=yes \
+  -p ProtectKernelModules=yes \
+  -p ProtectKernelLogs=yes \
+  -p ProtectControlGroups=yes \
+  -p ProtectClock=yes \
+  -p ProtectHostname=yes \
+  -p ProtectProc=invisible \
+  -p ProcSubset=pid \
+  -p SystemCallArchitectures=native \
+  -p SystemCallFilter=@system-service \
+  -p MemoryMax=512M \
+  -p TasksMax=32 \
+  /opt/oak-events/venv/bin/oak-events mcp \
+    --events-dir /var/lib/oak-events/events \
+    --access-log /var/log/oak-events/mcp-access.jsonl

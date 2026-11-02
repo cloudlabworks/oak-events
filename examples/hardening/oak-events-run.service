@@ -1,0 +1,60 @@
+# /etc/systemd/system/oak-events-run.service
+# oak-events camera runner as a dedicated, sandboxed system user.
+# See docs/HARDENING.md in oak-events. Replace the model file name and hash with yours.
+
+[Unit]
+Description=oak-events camera runner (privacy-first events, no pictures)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=oak-events
+Group=oak-events
+ExecStart=/opt/oak-events/venv/bin/oak-events run --quiet \
+    --model /etc/oak-events/yolov6n-r2-288x512.rvc2.tar.xz \
+    --model-sha256 8372e2dec2d5e192e6ad9555b9412c3e31101b06e68121cfd08e92d4a4641122 \
+    --out-dir /var/lib/oak-events/events
+Restart=always
+RestartSec=10
+
+# Files: only the events directory is writable; everything else is read-only or hidden.
+UMask=0077
+StateDirectory=oak-events oak-events/events
+StateDirectoryMode=0700
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+# Privileges
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictRealtime=yes
+RestrictNamespaces=yes
+
+# Kernel and system interfaces
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+ProtectProc=invisible
+ProcSubset=pid
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+
+# Network: a PoE camera needs IPv4 (discovery uses UDP broadcast). DepthAI also uses netlink.
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+# USB camera instead of PoE: replace the line above with the three lines below.
+#   PrivateNetwork=yes
+#   RestrictAddressFamilies=AF_UNIX AF_NETLINK
+#   DeviceAllow=char-usb_device rw
+DevicePolicy=closed
+
+[Install]
+WantedBy=multi-user.target
