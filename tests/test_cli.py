@@ -15,6 +15,36 @@ def test_help_lists_commands(capsys):
         assert cmd in out
 
 
+def test_mcp_stale_after_defaults_and_accepts_positive_seconds():
+    parser = cli.build_parser()
+    default = parser.parse_args(["mcp", "--events-dir", "events"])
+    custom = parser.parse_args(["mcp", "--events-dir", "events", "--stale-after", "60"])
+    assert default.stale_after == 900.0
+    assert custom.stale_after == 60.0
+
+
+@pytest.mark.parametrize("value", ["0", "-1", "nan", "inf"])
+def test_mcp_stale_after_rejects_non_positive_or_non_finite_values(value):
+    with pytest.raises(SystemExit) as exc:
+        cli.build_parser().parse_args(["mcp", "--events-dir", "events", "--stale-after", value])
+    assert exc.value.code == 2
+
+
+def test_cmd_mcp_passes_stale_after(monkeypatch, tmp_path):
+    from oak_events import mcp_server
+
+    called = {}
+    monkeypatch.setattr(
+        mcp_server,
+        "serve",
+        lambda events_dir, *, stale_after_s: called.update(
+            events_dir=events_dir, stale_after_s=stale_after_s
+        ),
+    )
+    assert cli.main(["mcp", "--events-dir", str(tmp_path), "--stale-after", "60"]) == 0
+    assert called == {"events_dir": str(tmp_path), "stale_after_s": 60.0}
+
+
 def test_doctor_without_depthai(monkeypatch, capsys):
     monkeypatch.setitem(sys.modules, "depthai", None)  # simulate "not installed"
     assert cli.main(["doctor", "--json"]) == 0

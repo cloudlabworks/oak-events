@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import importlib.metadata
 import json
+import math
 import sys
 from typing import Sequence
 
@@ -35,6 +36,16 @@ def bootloader_advice(version: str | None) -> str:
         return ("older than 0.0.29: on RVC2 PoE devices, update the bootloader "
                 "(fixes a device-not-found bug)")
     return "ok (>= 0.0.29)"
+
+
+def _positive_seconds(value: str) -> float:
+    try:
+        seconds = float(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must be a number") from exc
+    if not math.isfinite(seconds) or seconds <= 0:
+        raise argparse.ArgumentTypeError("must be greater than zero")
+    return seconds
 
 
 def cmd_run(args: argparse.Namespace) -> int:
@@ -128,7 +139,7 @@ def cmd_mcp(args: argparse.Namespace) -> int:
     from . import mcp_server
 
     try:
-        mcp_server.serve(args.events_dir)
+        mcp_server.serve(args.events_dir, stale_after_s=args.stale_after)
     except RuntimeError as exc:
         print(f"oak-events: {exc}", file=sys.stderr)
         return 4
@@ -165,6 +176,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     mcp = sub.add_parser("mcp", help="serve events to agents over MCP (stdio)")
     mcp.add_argument("--events-dir", required=True, help="directory written by 'run --out-dir'")
+    mcp.add_argument("--stale-after", type=_positive_seconds, default=900.0, metavar="SECONDS",
+                     help="mark camera health stale after this many seconds (default 900)")
     mcp.set_defaults(func=cmd_mcp)
     return parser
 

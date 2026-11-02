@@ -61,7 +61,7 @@ def test_tool_outputs_are_json_text(events_dir):
 
 def test_mcp_server_registers_text_tools(events_dir):
     pytest.importorskip("mcp")
-    server = m.build_server(events_dir)
+    server = m.build_server(events_dir, stale_after_s=60)
     tools = asyncio.run(server.list_tools())
     names = sorted(t.name for t in tools)
     assert names == ["camera_health", "recent_events", "zone_state"]
