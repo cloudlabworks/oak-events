@@ -11,7 +11,7 @@ All notable changes to this project are documented here. The format follows
 - Repository moved to [cloudlabworks/oak-events](https://github.com/cloudlabworks/oak-events);
   the MCP registry name is now `io.github.cloudlabworks/oak-events`. Old
   `issaquahd/oak-events` links redirect.
-- First release published to PyPI (trusted publishing).
+- ~~First release published to PyPI (trusted publishing).~~ Correction 2026-11-02: both release runs on 2026-10-12 failed; the package is not on PyPI yet. Install from source until the next release.
 
 ## [0.1.0] - 2026-10-11
 
