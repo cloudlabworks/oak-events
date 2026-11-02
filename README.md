@@ -114,9 +114,24 @@ the colour camera only approximately, so leave some margin.
 
 | Command | What it does |
 | --- | --- |
-| `oak-events run --model PATH [--device-id ID] [--out-dir DIR] [--zones FILE] [--fps 10]` | Run the camera; print events, optionally append to `DIR/YYYY-MM-DD.jsonl` |
+| `oak-events run --model PATH [--device-id ID] [--out-dir DIR] [--zones FILE] [--fps 10] [--model-sha256 HEX] [--confidence-stats]` | Run the camera; print events, optionally append to `DIR/YYYY-MM-DD.jsonl` |
 | `oak-events doctor [--json]` | depthai version, visible devices, bootloader advice, privacy env state |
-| `oak-events mcp --events-dir DIR [--stale-after SECONDS]` | MCP stdio server with `recent_events`, `zone_state`, `camera_health`; `camera_health` defaults to stale after 900 seconds |
+| `oak-events mcp --events-dir DIR [--stale-after SECONDS] [--access-log FILE]` | MCP stdio server with `recent_events`, `zone_state`, `camera_health`; `camera_health` defaults to stale after 900 seconds |
+
+Optional checks, all off unless you set them:
+
+- `--model-sha256 HEX`: compare the model archive's SHA-256 with `HEX` at
+  start and refuse to run on a mismatch (`camera` event `error`, exit code 3,
+  camera not opened). The hash is computed and recorded in the `camera` `up`
+  event on every start, with or without this option. The reference hash is in
+  [`docs/MODEL_CARD.md`](docs/MODEL_CARD.md).
+- `--confidence-stats`: add per-zone detection-confidence statistics to each
+  `alive` event (see the spot-check procedure in the model card).
+- `--access-log FILE`: append one JSON line per MCP tool call to `FILE` (mode
+  0600): time, tool name, argument names with the size of each value, result
+  count, success, and the process id of the MCP client. Argument values and
+  results are not written, and there is no image content to write. `FILE`
+  must be outside the events directory.
 
 ## Event schema
 
@@ -129,8 +144,14 @@ Every line is a JSON object with `ts` (ISO-8601 local time with offset),
 | `person_exit` | `zone`, `dwell_s` | nobody seen for `gone_seconds` (10); dwell = first to last sighting |
 | `depth_baseline` | `zone`, `cells_judged`, `cells_noisy`, `grid` | baseline built; noisy cells (stereo noise, low texture) are ignored |
 | `depth_change` | `zone`, `cells` (e.g. `["r0c3"]`), `delta_mm` | a cell's depth moved > 15 % for `--hold-seconds` (60) with nobody present |
-| `camera` | `state` (`up`, `not_found`, `error`, `reconnect`, `pipeline_stopped`, `stopped`), plus `device`, `device_model`, `bootloader`, `model`, `detail` as relevant | camera lifecycle |
-| `alive` | `det_fps`, `person`, `occupied` | heartbeat every `--alive-every` seconds (300) |
+| `camera` | `state` (`up`, `not_found`, `error`, `reconnect`, `pipeline_stopped`, `stopped`), plus `device`, `device_model`, `bootloader`, `model`, `model_sha256`, `model_sha256_checked`, `expected_sha256`, `detail` as relevant | camera lifecycle |
+| `alive` | `det_fps`, `person`, `occupied`; with `--confidence-stats` also `confidence`: per zone `n`, `mean`, `min`, `max`, `below` | heartbeat every `--alive-every` seconds (300) |
+| `privacy` | `private`, `telemetry_opt_in`, `deviations` | written once per run, before DepthAI loads: `private` is `false` if any DepthAI privacy variable differs from the private default, `deviations` names them |
+
+In `confidence`, `n` counts per-frame person detections in the zone at or
+above `--person-confidence` and `below` counts those under it; `mean`, `min`
+and `max` describe the accepted ones (`null` when `n` is 0). Each `alive`
+event covers the time since the previous one.
 
 Example:
 
@@ -148,7 +169,7 @@ Python SDK). Tools, all returning JSON text:
 
 - `recent_events(limit=50, kind=None)` - latest events, oldest first
 - `zone_state()` - per zone: person present or not, latest person and depth events
-- `camera_health()` - latest `camera` and `alive` events with their age and a status (`ok`, `stale`, `no_data`, or the last camera state)
+- `camera_health()` - latest `camera` and `alive` events with their age and a status (`ok`, `stale`, `no_data`, or the last camera state), plus the latest `privacy` event and `private` (`true`, `false`, or `null` if no run has written one)
 
 See `examples/claude-desktop-mcp.json` for a client config, and
 `examples/openclaw-stream.md` / `examples/webhook.md` for wiring the event

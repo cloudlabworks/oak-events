@@ -8,7 +8,7 @@ Event schema: every event is a flat dict with
 
 * ``ts``   - ISO-8601 local time with UTC offset, second precision
 * ``kind`` - event kind (``person_enter``, ``person_exit``, ``depth_baseline``,
-  ``depth_change``, ``camera``, ``alive``)
+  ``depth_change``, ``camera``, ``alive``, ``privacy``)
 * kind-specific fields; person and depth events carry ``zone``.
 """
 
@@ -169,6 +169,50 @@ def load_zones(path: str | Path | None) -> list[Zone]:
 Detection = Sequence[Any]
 
 
+class ConfidenceStats:
+    """Detection-confidence statistics for one zone, reset at each snapshot.
+
+    Counts per-frame person detections inside the zone: ``n`` at or above the
+    tracker's threshold (with their ``mean``, ``min`` and ``max`` confidence)
+    and ``below`` for those the threshold rejected. On a scene that does not
+    change, a falling mean or a rising ``below`` count means the model, the
+    camera or the light changed. Only numbers are kept, never a picture.
+    """
+
+    def __init__(self) -> None:
+        self.reset()
+
+    def reset(self) -> None:
+        self.n = 0
+        self.below = 0
+        self._sum = 0.0
+        self._min: float | None = None
+        self._max: float | None = None
+
+    def add(self, confidence: float, accepted: bool) -> None:
+        if not math.isfinite(confidence):
+            return  # not a usable number; NaN would also break the JSON line
+        if not accepted:
+            self.below += 1
+            return
+        self.n += 1
+        self._sum += confidence
+        self._min = confidence if self._min is None else min(self._min, confidence)
+        self._max = confidence if self._max is None else max(self._max, confidence)
+
+    def snapshot(self) -> dict[str, Any]:
+        """The statistics since the last snapshot, then reset."""
+        out: dict[str, Any] = {
+            "n": self.n,
+            "mean": round(self._sum / self.n, 3) if self.n else None,
+            "min": round(self._min, 3) if self._min is not None else None,
+            "max": round(self._max, 3) if self._max is not None else None,
+            "below": self.below,
+        }
+        self.reset()
+        return out
+
+
 class PersonTracker:
     """Turn per-frame detections into debounced ``person_enter`` / ``person_exit`` events.
 
@@ -177,6 +221,8 @@ class PersonTracker:
     * ``person_exit`` fires once nobody has been seen for ``gone_seconds``;
       it carries ``dwell_s`` (first confirmed sighting to last sighting).
     * ``now`` is a monotonic clock in seconds supplied by the caller.
+    * With ``stats``, every person detection in the zone is also counted in
+      that :class:`ConfidenceStats` (``oak-events run --confidence-stats``).
     """
 
     def __init__(
@@ -186,6 +232,7 @@ class PersonTracker:
         min_confidence: float = 0.5,
         zone: Zone | None = None,
         label: str = "person",
+        stats: ConfidenceStats | None = None,
     ) -> None:
         if confirm_frames < 1:
             raise ValueError("confirm_frames must be >= 1")
@@ -194,6 +241,7 @@ class PersonTracker:
         self.min_confidence = min_confidence
         self.zone = zone or Zone()
         self.label = label
+        self.stats = stats
         self._streak = 0
         self._since: float | None = None
         self._last_seen = 0.0
@@ -206,10 +254,17 @@ class PersonTracker:
         out = []
         for det in detections:
             label, conf, _x, _y, z = det[:5]
-            if str(label) != self.label or conf < self.min_confidence:
+            if str(label) != self.label:
+                continue
+            accepted = not conf < self.min_confidence
+            if not accepted and self.stats is None:
                 continue
             cx, cy = (det[5], det[6]) if len(det) >= 7 else (None, None)
-            if self.zone.contains(z, cx, cy):
+            if not self.zone.contains(z, cx, cy):
+                continue
+            if self.stats is not None:
+                self.stats.add(float(conf), accepted)
+            if accepted:
                 out.append(det)
         return out
 
