@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import json
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Sequence
@@ -104,8 +105,18 @@ class Zone:
 
 
 def _is_number(value: Any) -> bool:
-    """JSON numbers only: ``True`` / ``False`` are ints in Python but not numbers here."""
-    return isinstance(value, (int, float)) and not isinstance(value, bool)
+    """Finite JSON numbers only.
+
+    ``True`` / ``False`` are ints in Python but not numbers here. ``NaN`` and
+    ``Infinity`` (which Python's json accepts) and integers too large for a
+    float are rejected: a NaN bound would silently match every depth.
+    """
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    try:
+        return math.isfinite(value)
+    except OverflowError:
+        return False
 
 
 def parse_zones(spec: Any) -> list[Zone]:

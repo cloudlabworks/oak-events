@@ -27,3 +27,7 @@ htmlcov/
 .DS_Store
 .idea/
 .vscode/
+
+# Fuzzing output (fuzz/fuzz_events.py)
+crash-*
+/crashes/

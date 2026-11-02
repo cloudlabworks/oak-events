@@ -105,7 +105,8 @@ names regions by normalized image box and/or distance:
 ```
 
 `bbox` is `[x0, y0, x1, y1]` in 0..1 with the origin top-left; `z_mm` is
-`[min, max]` distance in millimetres (either side may be `null`). Each zone
+`[min, max]` distance in millimetres (either side may be `null`). Numbers must
+be finite: `NaN` and `Infinity` are rejected. Each zone
 gets its own person tracker and depth-change grid. The depth map is aligned to
 the colour camera only approximately, so leave some margin.
 

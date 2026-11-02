@@ -12,12 +12,30 @@ All notable changes to this project are documented here. The format follows
   flow and privacy impact, SBOM (CycloneDX) with licence summary. README and
   `SECURITY.md` link them and the CloudLab Works incident response plan.
 - Configurable `oak-events mcp --stale-after SECONDS` threshold for camera health.
+- Atheris fuzz harness `fuzz/fuzz_events.py` for zones files and event JSONL
+  files, run for 60 s on every push and pull request (`fuzz` workflow).
+
+### Changed
+
+- CI and release workflows install their tools from hash-pinned lists in
+  `requirements/` (`pip install --require-hashes`), and install or build the
+  package without build isolation so no unpinned package is fetched.
 
 ### Fixed
 
 - `oak-events run --zones` now reports a malformed `z_mm` or `bbox` (not a
   list, non-numeric or boolean values) as a one-line "bad zones file" error
   naming the zone, with exit code 2, instead of a Python traceback.
+- Zones files: `NaN`, `Infinity` and integers too large for a float in `z_mm`
+  or `bbox` are now a "bad zones file" error. A `NaN` bound used to be
+  accepted and silently matched every depth. Found by the fuzz harness.
+- MCP tools: a daily event file with one invalid UTF-8 line made every tool
+  fail; that line is now skipped like any other malformed line. Found by the
+  fuzz harness. Lines are now split at line endings only, so a U+2028 inside a
+  field (kept raw by the sink) no longer splits an event in two.
+- MCP `zone_state` no longer fails on an event whose `zone` is a list or
+  object, and `camera_health` no longer fails on a non-string or out-of-range
+  `ts`. Found by the fuzz harness.
 
 ## [0.1.1] - 2026-10-12
 

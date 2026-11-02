@@ -1,0 +1,8 @@
+# Tools and test dependencies for .github/workflows/ci.yml (no depthai: tests run without a camera).
+# Regenerate ci.txt after editing, see requirements/README.md.
+hatchling
+editables  # hatchling needs it for editable installs (pip install -e)
+numpy
+mcp
+pytest
+ruff==0.17.3
