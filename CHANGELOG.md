@@ -15,6 +15,10 @@ All notable changes to this project are documented here. The format follows
   `oak_events-<version>.intoto.jsonl`. Verify a download with
   `gh attestation verify <file> --repo cloudlabworks/oak-events`. PyPI's own
   PEP 740 attestations are unchanged.
+- User documentation in `docs/` (overview, install, quickstart, MCP server,
+  configuration, events reference, running it for real, security,
+  contributing), with `docs/SUMMARY.md` and `.gitbook.yaml` so the folder can
+  be synced to a GitBook site.
 
 ## [0.1.2] - 2026-11-02
 
