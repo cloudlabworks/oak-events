@@ -60,8 +60,7 @@ Requires DepthAI v3 (`depthai>=3.9`) and Python 3.10+.
 ## Quickstart
 
 ```bash
-# Not on PyPI yet: install the v0.1.0 release from GitHub
-pip install 'oak-events[camera,mcp] @ git+https://github.com/cloudlabworks/oak-events@v0.1.0'
+pip install 'oak-events[camera,mcp]'
 
 # 1. Check the setup (works without a camera or depthai installed)
 oak-events doctor
@@ -206,7 +205,7 @@ explaining why: `not_found`, `error`, `pipeline_stopped`.
 - [Data flow, retention and privacy impact](docs/DATA_FLOW.md): what leaves
   the camera, what is stored, retention and redaction.
 - [Software bill of materials](docs/SBOM.md): CycloneDX SBOM and licence
-  summary for 0.1.1.
+  summary for 0.1.2.
 - [Shared responsibility](docs/SHARED_RESPONSIBILITY.md): who owns which
   security control (CloudLab Works, you, the model provider), per AI-CAIQ
   question.

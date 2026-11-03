@@ -3,17 +3,21 @@
 | | |
 | --- | --- |
 | Owner | Alex Alvord, CloudLab Works |
-| Current SBOM | `sbom-oak-events-0.1.1-00d9053.cdx.json` (CycloneDX 1.6, JSON) |
+| Current SBOM | `sbom-oak-events-0.1.2-c4fe71e.cdx.json`; licence summary `sbom-licenses-0.1.2-c4fe71e.md`. Previous: `sbom-oak-events-0.1.1-00d9053.cdx.json` (CycloneDX 1.6, JSON) |
 | Regenerated | At every release (security baseline, section 7) and at least once a year |
 
 ## What the current SBOM covers
 
-- oak-events 0.1.1 built from commit 00d9053, installed with both extras: `oak-events[camera,mcp]`.
+- oak-events 0.1.2 built from commit c4fe71e with the version set to 0.1.2, installed with both extras: `oak-events[camera,mcp]`.
 - oak-events as the root component, and 31 components: the 30 Python packages it pulls in plus `pip`
   from the virtual environment, resolved on 2026-11-02 on macOS arm64 with Python 3.14, including
   `depthai` 3.11.0, `mcp` 2.3.0 and `numpy` 2.5.4.
 - Licences of the 30 dependencies are permissive or public-domain style (MIT, BSD-3-Clause, Apache-2.0,
   MIT-0, PSF-2.0, 0BSD, Zlib, CC0-1.0); oak-events itself is MIT.
+- Changes from the 0.1.1 SBOM: `pip` 26.2.1 to 26.3; every other component is unchanged.
+- Provenance re-checked on 2026-11-02 for these 31 components with the PyPI integrity API (supply chain
+  policy section 4.1): 22 publish attestations for every file, 9 publish none (annotated-types, cffi,
+  depthai, h11, httpcore2, httpx2, opentelemetry-api, pycparser, pydantic_core). Same result as for 0.1.1.
 
 **Not covered:**
 
