@@ -53,6 +53,7 @@ results in your PR.
 - Add a line under "Unreleased" in `CHANGELOG.md`.
 - Do not include device ids, network addresses, hostnames or personal paths in
   code, tests, docs or example output.
+- By contributing you agree your work is released under the MIT licence in `LICENSE`.
 
 ## Code of conduct
 
