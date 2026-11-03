@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-02
+
 ### Added
 
 - Security and AI documentation in `docs/`: threat model, model card, data
@@ -31,9 +33,21 @@ All notable changes to this project are documented here. The format follows
 - `examples/webhook.md`: alerting on privacy and model-integrity events.
 - Fuzz harness also checks the access log's result count and the
   `camera_health` privacy fields.
+- `docs/SHARED_RESPONSIBILITY.md` with `docs/ssrm-ownership-ai-caiq-v1.1.0.csv`:
+  who owns each security control (CloudLab Works, you, the model provider),
+  per CSA AI-CAIQ v1.1.0 question.
+- `docs/RISK_ASSESSMENT.md`: AI risk register and AI impact assessment.
+- `docs/HARDENING.md` and `examples/hardening/`: run the camera runner as a
+  dedicated user under a sandboxed systemd unit and the MCP server read-only,
+  without network or devices; with a container test bed.
 
 ### Changed
 
+- Threat model: mitigations mapped to threats and a guardrail review
+  procedure. Model card: verification steps, provenance, confidence
+  monitoring and spot-check, bias and fairness.
+- SBOM regenerated for 0.1.2 (`docs/SBOM.md`); provenance re-checked.
+- README: install from PyPI.
 - CI and release workflows install their tools from hash-pinned lists in
   `requirements/` (`pip install --require-hashes`), and install or build the
   package without build isolation so no unpinned package is fetched.
@@ -61,7 +75,7 @@ All notable changes to this project are documented here. The format follows
 - Repository moved to [cloudlabworks/oak-events](https://github.com/cloudlabworks/oak-events);
   the MCP registry name is now `io.github.cloudlabworks/oak-events`. Old
   `issaquahd/oak-events` links redirect.
-- ~~First release published to PyPI (trusted publishing).~~ Correction 2026-11-02: both release runs on 2026-10-12 failed; the package is not on PyPI yet. Install from source until the next release.
+- ~~First release published to PyPI (trusted publishing).~~ Correction 2026-11-02: both release runs on 2026-10-12 failed. 0.1.1 was published to PyPI on 2026-11-02, when its release run was repeated.
 
 ## [0.1.0] - 2026-10-11
 
