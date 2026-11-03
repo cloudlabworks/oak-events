@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Signed releases: the `release` workflow records a GitHub artifact
+  attestation (Sigstore-signed SLSA build provenance) for the sdist and
+  wheel in the job that builds them, and after the PyPI upload creates a
+  GitHub Release with both files and the provenance bundle
+  `oak_events-<version>.intoto.jsonl`. Verify a download with
+  `gh attestation verify <file> --repo cloudlabworks/oak-events`. PyPI's own
+  PEP 740 attestations are unchanged.
+
 ## [0.1.2] - 2026-11-02
 
 ### Added

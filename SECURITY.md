@@ -29,6 +29,21 @@ Anything that breaks the privacy model described in the README, for example:
   the events directory, or touching the camera,
 - event files being created with permissions broader than the owner.
 
+## Verifying a release
+
+From the release after 0.1.2, each version tag builds the sdist and wheel
+once, records build provenance for them through Sigstore, publishes them to
+PyPI and attaches the same files and `oak_events-<version>.intoto.jsonl` to
+the GitHub Release. To check a downloaded file:
+
+```bash
+gh attestation verify oak_events-<version>-py3-none-any.whl --repo cloudlabworks/oak-events
+```
+
+Add `--bundle oak_events-<version>.intoto.jsonl` to verify against the bundle
+from the release instead of the GitHub attestations API. PyPI also serves PEP
+740 publish attestations for every file it hosts.
+
 ## Supported versions
 
 Only the latest release receives fixes while the project is pre-1.0.
