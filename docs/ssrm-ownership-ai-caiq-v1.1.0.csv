@@ -1,0 +1,321 @@
+question_id,control_id,domain,control_title,ownership,owner,answer,customer_responsibility
+A&A-01.1,A&A-01,Audit & Assurance,Audit and Assurance Policy and Procedures,AP-Owned,CloudLab Works,YES,Customers may review the published Scorecard and this AI-CAIQ; assurance over their own deployment is theirs.
+A&A-01.2,A&A-01,Audit & Assurance,Audit and Assurance Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+A&A-02.1,A&A-02,Audit & Assurance,Independent Assessments,AP-Owned,CloudLab Works,NO,Customers needing independent assurance should perform or commission their own review of the open source code.
+A&A-03.1,A&A-03,Audit & Assurance,Risk Based Planning Assessment,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+A&A-04.1,A&A-04,Audit & Assurance,Requirements Compliance,AP-Owned,CloudLab Works,NO,"Verify the legal requirements that apply to your own camera deployment (notice, consent, retention)."
+A&A-05.1,A&A-05,Audit & Assurance,Audit Management Process,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+A&A-06.1,A&A-06,Audit & Assurance,Remediation,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+AIS-01.1,AIS-01,Application & Interface Security,Application and Interface Security Policy and Procedures,AP-Owned,CloudLab Works,YES,Apply your own application security policy to how you deploy and integrate oak-events.
+AIS-01.2,AIS-01,Application & Interface Security,Application and Interface Security Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+AIS-02.1,AIS-02,Application & Interface Security,Application Security Baseline Requirements,AP-Owned,CloudLab Works,YES,None for the baseline; keep event files and the events directory owner-only as shipped.
+AIS-03.1,AIS-03,Application & Interface Security,Application Security Metrics,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+AIS-04.1,AIS-04,Application & Interface Security,Secure Application Development Lifecycle,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+AIS-05.1,AIS-05,Application & Interface Security,Application Security Testing,AP-Owned,CloudLab Works,YES,Test new versions on your own hardware before upgrading production deployments.
+AIS-05.2,AIS-05,Application & Interface Security,Application Security Testing,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+AIS-06.1,AIS-06,Application & Interface Security,Secure Application Deployment,Shared AP-AIC,Shared: CloudLab Works and customer,NO,"Install a pinned version, run oak-events under a supervisor that restarts it (README 'Running it for real', https://github.com/cloudlabworks/oak-events/blob/1732fbb/README.md) and own the deployment configuration."
+AIS-07.1,AIS-07,Application & Interface Security,Application Vulnerability Remediation,AP-Owned,CloudLab Works,YES,Report suspected vulnerabilities privately as described in SECURITY.md (https://github.com/cloudlabworks/oak-events/blob/1732fbb/SECURITY.md); watch releases and CHANGELOG.md for fixes and upgrade promptly.
+AIS-08.1,AIS-08,Application & Interface Security,API Security,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Restrict who can start the MCP server and read the events directory; configure tool approval in your MCP client.
+AIS-08.2,AIS-08,Application & Interface Security,API Security,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+AIS-09.1,AIS-09,Application & Interface Security,Input Validation,AP-Owned,CloudLab Works,YES,Keep the zones file and model file under your control.
+AIS-10.1,AIS-10,Application & Interface Security,Output Validation,AP-Owned,CloudLab Works,YES,Keep the events directory writable only by the account that runs 'oak-events run'.
+AIS-11.1,AIS-11,Application & Interface Security,Agents Security Boundaries,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Define the agent's other tools and permissions in your MCP client; oak-events only bounds its own tools.
+AIS-12.1,AIS-12,Application & Interface Security,Source Code Management,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+AIS-13.1,AIS-13,Application & Interface Security,AI Sandboxing,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Run the MCP server and agent tools in an isolated environment with read-only access to the events directory.
+AIS-14.1,AIS-14,Application & Interface Security,AI Cache Protection,ND,Not applicable (no owner),NA,Protect any caches in your own agent runtime or MCP client.
+AIS-15.1,AIS-15,Application & Interface Security,Prompt Differentiation,AIC-Owned,Customer,NA,Treat oak-events tool output as untrusted data in your agent's prompts (zone names and labels come from your configuration and model).
+BCR-01.1,BCR-01,Business Continuity Management and Operational Resilience,Business Continuity Management Policy and Procedures,AP-Owned,CloudLab Works,NO,Keep a copy of the release you run and of your model file.
+BCR-01.2,BCR-01,Business Continuity Management and Operational Resilience,Business Continuity Management Policy and Procedures,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+BCR-02.1,BCR-02,Business Continuity Management and Operational Resilience,Risk Assessment and Impact Analysis,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+BCR-02.2,BCR-02,Business Continuity Management and Operational Resilience,Risk Assessment and Impact Analysis,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+BCR-03.1,BCR-03,Business Continuity Management and Operational Resilience,Business Continuity Strategy,Shared AP-AIC,Shared: CloudLab Works and customer,YES,"Run oak-events under a supervisor (systemd, launchd, container restart policy) and keep the release and model file you depend on."
+BCR-04.1,BCR-04,Business Continuity Management and Operational Resilience,Business Continuity Planning,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+BCR-05.1,BCR-05,Business Continuity Management and Operational Resilience,Documentation,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+BCR-05.2,BCR-05,Business Continuity Management and Operational Resilience,Documentation,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+BCR-06.1,BCR-06,Business Continuity Management and Operational Resilience,Business Continuity Exercises,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+BCR-07.1,BCR-07,Business Continuity Management and Operational Resilience,Communication,AP-Owned,CloudLab Works,YES,Watch the repository releases to receive notices.
+BCR-08.1,BCR-08,Business Continuity Management and Operational Resilience,Backup,AIC-Owned,Customer,NA,"Back up event files, zones file and model file according to your own policy."
+BCR-08.2,BCR-08,Business Continuity Management and Operational Resilience,Backup,AIC-Owned,Customer,NA,Protect and test restores of your own backups.
+BCR-09.1,BCR-09,Business Continuity Management and Operational Resilience,Disaster Response Plan,ND,Not applicable (no owner),NA,Include the oak-events host and camera in your own disaster response plan.
+BCR-09.2,BCR-09,Business Continuity Management and Operational Resilience,Disaster Response Plan,ND,Not applicable (no owner),NA,Review your own plan.
+BCR-10.1,BCR-10,Business Continuity Management and Operational Resilience,Response Plan Exercise,ND,Not applicable (no owner),NA,Exercise your own plan.
+BCR-11.1,BCR-11,Business Continuity Management and Operational Resilience,Equipment Redundancy,AIC-Owned,Customer,NA,Provide redundant cameras or hosts if your use case needs them.
+CCC-01.1,CCC-01,Change Control and Configuration Management,Change Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CCC-01.2,CCC-01,Change Control and Configuration Management,Change Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CCC-02.1,CCC-02,Change Control and Configuration Management,Quality Testing,AP-Owned,CloudLab Works,YES,Review the CHANGELOG before upgrading.
+CCC-03.1,CCC-03,Change Control and Configuration Management,Change Management Technology,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CCC-04.1,CCC-04,Change Control and Configuration Management,Unauthorized Change Protection,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+CCC-05.1,CCC-05,Change Control and Configuration Management,Change Agreements,AIC-Owned,Customer,NA,Decide when to upgrade; pin the version you run.
+CCC-06.1,CCC-06,Change Control and Configuration Management,Change Management Baseline,AP-Owned,CloudLab Works,YES,Record the configuration you deploy.
+CCC-06.2,CCC-06,Change Control and Configuration Management,Change Management Baseline,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CCC-07.1,CCC-07,Change Control and Configuration Management,Detection of Baseline Deviation,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Alert on the startup privacy event once available.
+CCC-08.1,CCC-08,Change Control and Configuration Management,Exception Management,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CCC-09.1,CCC-09,Change Control and Configuration Management,Change Restoration,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Pin versions and keep the previous version available for rollback.
+CEK-01.1,CEK-01,"Cryptography, Encryption & Key Management",Encryption and Key Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CEK-01.2,CEK-01,"Cryptography, Encryption & Key Management",Encryption and Key Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CEK-02.1,CEK-02,"Cryptography, Encryption & Key Management",CEK Roles and Responsibilities,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CEK-03.1,CEK-03,"Cryptography, Encryption & Key Management",Data Protection,AIC-Owned,Customer,NA,"Use full-disk encryption on the host and keep the PoE camera on a trusted, isolated network segment."
+CEK-04.1,CEK-04,"Cryptography, Encryption & Key Management",Encryption Algorithm,AIC-Owned,Customer,NA,"Use full-disk encryption on the host and keep the PoE camera on a trusted, isolated network segment."
+CEK-05.1,CEK-05,"Cryptography, Encryption & Key Management",Encryption Change Management,ND,Not applicable (no owner),NA,Manage cryptography in your own environment.
+CEK-06.1,CEK-06,"Cryptography, Encryption & Key Management",Encryption Change Cost Benefit Analysis,ND,Not applicable (no owner),NA,Manage cryptography in your own environment.
+CEK-07.1,CEK-07,"Cryptography, Encryption & Key Management",Encryption Risk Management,ND,Not applicable (no owner),NA,Manage cryptography in your own environment.
+CEK-08.1,CEK-08,"Cryptography, Encryption & Key Management",Service Customer Key Management Capability,AIC-Owned,Customer,NA,Manage your own keys.
+CEK-09.1,CEK-09,"Cryptography, Encryption & Key Management",Encryption and Key Management Audit,ND,Not applicable (no owner),NA,Audit your own systems.
+CEK-09.2,CEK-09,"Cryptography, Encryption & Key Management",Encryption and Key Management Audit,ND,Not applicable (no owner),NA,Audit your own systems.
+CEK-10.1,CEK-10,"Cryptography, Encryption & Key Management",Key Generation,CSP-Owned,Platform provider,NA,Generate keys in your environment with approved libraries.
+CEK-11.1,CEK-11,"Cryptography, Encryption & Key Management",Key Purpose,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+CEK-12.1,CEK-12,"Cryptography, Encryption & Key Management",Key Rotation,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-13.1,CEK-13,"Cryptography, Encryption & Key Management",Key Revocation,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-14.1,CEK-14,"Cryptography, Encryption & Key Management",Key Destruction,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-15.1,CEK-15,"Cryptography, Encryption & Key Management",Key Activation,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-16.1,CEK-16,"Cryptography, Encryption & Key Management",Key Suspension,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-17.1,CEK-17,"Cryptography, Encryption & Key Management",Key Deactivation,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-18.1,CEK-18,"Cryptography, Encryption & Key Management",Key Archival,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-19.1,CEK-19,"Cryptography, Encryption & Key Management",Key Compromise,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-20.1,CEK-20,"Cryptography, Encryption & Key Management",Key Recovery,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+CEK-21.1,CEK-21,"Cryptography, Encryption & Key Management",Key Inventory Management,ND,Not applicable (no owner),NA,Apply key lifecycle controls to keys in your own environment.
+DCS-01.1,DCS-01,Datacenter Security,Physical and Environmental Security Policy and Procedures,AIC-Owned,Customer,NA,"Secure the premises, camera and host physically."
+DCS-01.2,DCS-01,Datacenter Security,Physical and Environmental Security Policy and Procedures,AIC-Owned,Customer,NA,"Secure the premises, camera and host physically."
+DCS-02.1,DCS-02,Datacenter Security,Off-Site Equipment Disposal Policy and Procedures,AIC-Owned,Customer,NA,Wipe hosts and storage that held event files before disposal.
+DCS-02.2,DCS-02,Datacenter Security,Off-Site Equipment Disposal Policy and Procedures,AIC-Owned,Customer,NA,Wipe hosts and storage that held event files before disposal.
+DCS-02.3,DCS-02,Datacenter Security,Off-Site Equipment Disposal Policy and Procedures,AIC-Owned,Customer,NA,Wipe hosts and storage that held event files before disposal.
+DCS-03.1,DCS-03,Datacenter Security,Off-Site Transfer Authorization Policy and Procedures,AIC-Owned,Customer,NA,Control transfers of your own hosts and event files.
+DCS-03.2,DCS-03,Datacenter Security,Off-Site Transfer Authorization Policy and Procedures,AIC-Owned,Customer,NA,Control transfers of your own hosts and event files.
+DCS-03.3,DCS-03,Datacenter Security,Off-Site Transfer Authorization Policy and Procedures,AIC-Owned,Customer,NA,Control transfers of your own hosts and event files.
+DCS-04.1,DCS-04,Datacenter Security,Secure Area Policy and Procedures,AIC-Owned,Customer,NA,"Secure the premises, camera and host physically."
+DCS-04.2,DCS-04,Datacenter Security,Secure Area Policy and Procedures,AIC-Owned,Customer,NA,"Secure the premises, camera and host physically."
+DCS-05.1,DCS-05,Datacenter Security,Secure Media Transportation Policy and Procedures,ND,Not applicable (no owner),NA,Apply your own media transport rules.
+DCS-05.2,DCS-05,Datacenter Security,Secure Media Transportation Policy and Procedures,ND,Not applicable (no owner),NA,Apply your own media transport rules.
+DCS-06.1,DCS-06,Datacenter Security,Assets Classification,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DCS-06.2,DCS-06,Datacenter Security,Assets Classification,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DCS-07.1,DCS-07,Datacenter Security,Assets Cataloguing and Tracking,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DCS-07.2,DCS-07,Datacenter Security,Assets Cataloguing and Tracking,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DCS-08.1,DCS-08,Datacenter Security,Controlled Physical Access Points,AIC-Owned,Customer,NA,"Secure the premises, camera and host physically."
+DCS-09.1,DCS-09,Datacenter Security,Equipment Identification,AIC-Owned,Customer,NA,Restrict which devices can reach the camera network.
+DCS-10.1,DCS-10,Datacenter Security,Secure Area Authorization,AIC-Owned,Customer,NA,"Secure the premises, camera and host physically."
+DCS-10.2,DCS-10,Datacenter Security,Secure Area Authorization,AIC-Owned,Customer,NA,"Secure the premises, camera and host physically."
+DCS-11.1,DCS-11,Datacenter Security,Surveillance System,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DCS-12.1,DCS-12,Datacenter Security,Adverse Event Response Training,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DCS-13.1,DCS-13,Datacenter Security,Cabling Security,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DCS-14.1,DCS-14,Datacenter Security,Environmental Systems,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DCS-15.1,DCS-15,Datacenter Security,Secure Utilities,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DCS-16.1,DCS-16,Datacenter Security,Equipment Location,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DCS-17.1,DCS-17,Datacenter Security,Datacenter Metrics,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DCS-18.1,DCS-18,Datacenter Security,Datacenter Operations Resilience,ND,Not applicable (no owner),NA,Apply to your own facilities if relevant.
+DSP-01.1,DSP-01,Data Security and Privacy Lifecycle Management,Security and Privacy Policy and Procedures,AP-Owned,CloudLab Works,YES,Apply your data lifecycle policy to event files.
+DSP-01.2,DSP-01,Data Security and Privacy Lifecycle Management,Security and Privacy Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DSP-02.1,DSP-02,Data Security and Privacy Lifecycle Management,Secure Disposal,AIC-Owned,Customer,NA,Delete event files securely when retiring storage.
+DSP-03.1,DSP-03,Data Security and Privacy Lifecycle Management,Data Inventory,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Inventory where your deployment stores event files.
+DSP-03.2,DSP-03,Data Security and Privacy Lifecycle Management,Data Inventory,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DSP-04.1,DSP-04,Data Security and Privacy Lifecycle Management,Data Classification,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Classify event files under your own scheme (sensitive at minimum).
+DSP-05.1,DSP-05,Data Security and Privacy Lifecycle Management,Data Flow Documentation,Shared AP-AIC,Shared: CloudLab Works and customer,YES,"Document any further flows you add (webhooks, agent logs)."
+DSP-05.2,DSP-05,Data Security and Privacy Lifecycle Management,Data Flow Documentation,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DSP-06.1,DSP-06,Data Security and Privacy Lifecycle Management,Data Ownership and Stewardship,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Name an owner for event data in your organization.
+DSP-06.2,DSP-06,Data Security and Privacy Lifecycle Management,Data Ownership and Stewardship,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Review your data ownership annually.
+DSP-07.1,DSP-07,Data Security and Privacy Lifecycle Management,Data Protection by Design and Default,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+DSP-08.1,DSP-08,Data Security and Privacy Lifecycle Management,Data Privacy by Design and Default,AP-Owned,CloudLab Works,YES,Keep event files local.
+DSP-08.2,DSP-08,Data Security and Privacy Lifecycle Management,Data Privacy by Design and Default,AP-Owned,CloudLab Works,YES,"Meet recording, notice and consent laws where the camera is installed."
+DSP-09.1,DSP-09,Data Security and Privacy Lifecycle Management,Data Protection Impact Assessment,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Run your own DPIA where law requires.
+DSP-10.1,DSP-10,Data Security and Privacy Lifecycle Management,Sensitive Data Transfer,AIC-Owned,Customer,NA,Protect any forwarding you configure and isolate the camera link.
+DSP-11.1,DSP-11,Data Security and Privacy Lifecycle Management,"Personal Data Access, Reversal, Rectification and Deletion",AIC-Owned,Customer,NA,Handle data-subject requests for your event files.
+DSP-12.1,DSP-12,Data Security and Privacy Lifecycle Management,Limitation of Purpose in Personal Data Processing,AIC-Owned,Customer,NA,Declare and keep to the purpose of your camera deployment.
+DSP-13.1,DSP-13,Data Security and Privacy Lifecycle Management,Personal Data Sub-processing,ND,Not applicable (no owner),NA,"Manage your own sub-processors (e.g. webhook targets, hosted LLMs)."
+DSP-14.1,DSP-14,Data Security and Privacy Lifecycle Management,Disclosure of Data Sub-processors,ND,Not applicable (no owner),NA,Disclose your own sub-processors to data subjects.
+DSP-15.1,DSP-15,Data Security and Privacy Lifecycle Management,Limitation of Production Data Use,ND,Not applicable (no owner),NA,Do not attach real event data to public issues (see the bug template).
+DSP-16.1,DSP-16,Data Security and Privacy Lifecycle Management,Data Retention and Deletion,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Set and enforce a retention period for event files. See DATA_FLOW.md section 4 for a cleanup recipe.
+DSP-17.1,DSP-17,Data Security and Privacy Lifecycle Management,Sensitive Data Protection,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Encrypt the host disk and restrict access to the events directory.
+DSP-18.1,DSP-18,Data Security and Privacy Lifecycle Management,Disclosure Notification,ND,Not applicable (no owner),NA,Handle authority requests for your own event files.
+DSP-19.1,DSP-19,Data Security and Privacy Lifecycle Management,Data Location,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Choose and record where event files are stored.
+DSP-20.1,DSP-20,Data Security and Privacy Lifecycle Management,Data Provenance and Transparency,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Record which model file and device you deploy.
+DSP-21.1,DSP-21,Data Security and Privacy Lifecycle Management,Data Poisoning Prevention & Detection,MP-Owned,Model provider,NA,Choose detection models from a provider whose training-data practices you accept.
+DSP-22.1,DSP-22,Data Security and Privacy Lifecycle Management,Privacy Enhancing Technologies,MP-Owned,Model provider,NA,Choose detection models from a provider whose training-data practices you accept.
+DSP-23.1,DSP-23,Data Security and Privacy Lifecycle Management,Data Integrity Check,MP-Owned,Model provider,NA,Choose detection models from a provider whose training-data practices you accept.
+DSP-23.2,DSP-23,Data Security and Privacy Lifecycle Management,Data Integrity Check,MP-Owned,Model provider,NA,Choose detection models from a provider whose training-data practices you accept.
+DSP-24.1,DSP-24,Data Security and Privacy Lifecycle Management,Data Differentiation and Relevance,MP-Owned,Model provider,NA,Choose detection models from a provider whose training-data practices you accept.
+GRC-01.1,GRC-01,"Governance, Risk and Compliance",Governance Program Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-01.2,GRC-01,"Governance, Risk and Compliance",Governance Program Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-02.1,GRC-02,"Governance, Risk and Compliance",Risk Management Program,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-03.1,GRC-03,"Governance, Risk and Compliance",Organizational Policy Reviews,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-04.1,GRC-04,"Governance, Risk and Compliance",Policy Exception Process,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-05.1,GRC-05,"Governance, Risk and Compliance",Information Security Program,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-06.1,GRC-06,"Governance, Risk and Compliance",Governance Responsibility Model,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-07.1,GRC-07,"Governance, Risk and Compliance",Information System Regulatory Mapping,AP-Owned,CloudLab Works,YES,Identify the requirements that apply to your deployment.
+GRC-07.2,GRC-07,"Governance, Risk and Compliance",Information System Regulatory Mapping,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-08.1,GRC-08,"Governance, Risk and Compliance",Special Interest Groups,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-09.1,GRC-09,"Governance, Risk and Compliance",Acceptable Use of the AI Service,AP-Owned,CloudLab Works,YES,Use oak-events within the acceptable-use policy and local law. Follow the acceptable use policy (governance policy section 8).
+GRC-09.2,GRC-09,"Governance, Risk and Compliance",Acceptable Use of the AI Service,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-10.1,GRC-10,"Governance, Risk and Compliance",AI Impact Assessment,AP-Owned,CloudLab Works,NO,Assess the impact of your own deployment.
+GRC-11.1,GRC-11,"Governance, Risk and Compliance",Bias and Fairness Assessment,Shared Across the Supply Chain,Shared across the supply chain,NO,Check detection quality on the people and scenes in your deployment.
+GRC-12.1,GRC-12,"Governance, Risk and Compliance",Ethics Committee,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+GRC-13.1,GRC-13,"Governance, Risk and Compliance",Explainability Requirement,AP-Owned,CloudLab Works,YES,Decide the explainability your use case needs.
+GRC-14.1,GRC-14,"Governance, Risk and Compliance",Explainability Evaluation,AP-Owned,CloudLab Works,YES,Account for these limits in agent behaviour.
+GRC-15.1,GRC-15,"Governance, Risk and Compliance",Human supervision,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Keep a human in control of any actions your agent takes on oak-events data.
+HRS-01.1,HRS-01,Human Resources,Background Screening Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-01.2,HRS-01,Human Resources,Background Screening Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-01.3,HRS-01,Human Resources,Background Screening Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-02.1,HRS-02,Human Resources,Acceptable Use of Technology Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-02.2,HRS-02,Human Resources,Acceptable Use of Technology Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-03.1,HRS-03,Human Resources,Clean Desk Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-03.2,HRS-03,Human Resources,Clean Desk Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-04.1,HRS-04,Human Resources,Remote and Home Working Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-04.2,HRS-04,Human Resources,Remote and Home Working Policy and Procedures,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-05.1,HRS-05,Human Resources,Asset returns,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-06.1,HRS-06,Human Resources,Employment Termination,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-07.1,HRS-07,Human Resources,Employment Agreement Process,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-08.1,HRS-08,Human Resources,Employment Agreement Content,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-09.1,HRS-09,Human Resources,Personnel Roles and Responsibilities,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-10.1,HRS-10,Human Resources,Non-Disclosure Agreements,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-11.1,HRS-11,Human Resources,Security Awareness Training,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-11.2,HRS-11,Human Resources,Security Awareness Training,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-12.1,HRS-12,Human Resources,Personal and Sensitive Data Awareness and Training,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-13.1,HRS-13,Human Resources,Compliance User Responsibility,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-14.1,HRS-14,Human Resources,AI Competency Training,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-14.2,HRS-14,Human Resources,AI Competency Training,ND,Not applicable (no owner),NA,No customer action for this control; it concerns CloudLab Works' own practices.
+HRS-15.1,HRS-15,Human Resources,AI Acceptable Use,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-01.1,IAM-01,Identity & Access Management,Identity and Access Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-01.2,IAM-01,Identity & Access Management,Identity and Access Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-02.1,IAM-02,Identity & Access Management,Credentials Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-02.2,IAM-02,Identity & Access Management,Credentials Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-03.1,IAM-03,Identity & Access Management,Identity Inventory,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-04.1,IAM-04,Identity & Access Management,Separation of Duties,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-05.1,IAM-05,Identity & Access Management,Least Privilege,AP-Owned,CloudLab Works,YES,Run oak-events under an unprivileged account.
+IAM-06.1,IAM-06,Identity & Access Management,Access Provisioning,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-07.1,IAM-07,Identity & Access Management,Access Changes and Revocation,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-08.1,IAM-08,Identity & Access Management,Access Review,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-09.1,IAM-09,Identity & Access Management,Segregation of Privileged Access Roles,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-10.1,IAM-10,Identity & Access Management,Management of Privileged Access Roles,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-10.2,IAM-10,Identity & Access Management,Management of Privileged Access Roles,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-11.1,IAM-11,Identity & Access Management,Service Customers' Approval for Agreed Privileged Access Roles,AIC-Owned,Customer,NA,Control privileged access in your environment.
+IAM-12.1,IAM-12,Identity & Access Management,Unique Identities,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-13.1,IAM-13,Identity & Access Management,Strong Authentication,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-13.2,IAM-13,Identity & Access Management,Strong Authentication,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-14.1,IAM-14,Identity & Access Management,Credentials Management,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IAM-15.1,IAM-15,Identity & Access Management,Authorization Mechanisms,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Control which accounts can run oak-events and read the events directory.
+IAM-16.1,IAM-16,Identity & Access Management,Knowledge Access Control - Need to Know,AP-Owned,CloudLab Works,YES,Give agents only the oak-events access they need.
+IAM-17.1,IAM-17,Identity & Access Management,Output Modification and Special Authorization,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Restrict write access to the events directory.
+IAM-18.1,IAM-18,Identity & Access Management,Agent Access Restriction,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Grant agents only the MCP servers they need.
+IPY-01.1,IPY-01,Interoperability & Portability,Interoperability and Portability Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IPY-01.2,IPY-01,Interoperability & Portability,Interoperability and Portability Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+IPY-02.1,IPY-02,Interoperability & Portability,Application Interface Availability,AP-Owned,CloudLab Works,YES,Retrieve your data directly from the events directory.
+IPY-03.1,IPY-03,Interoperability & Portability,Secure Interoperability and Portability Management,AIC-Owned,Customer,NA,Use secure protocols for any forwarding you add.
+IPY-04.1,IPY-04,Interoperability & Portability,Data Portability Contractual Obligations,ND,Not applicable (no owner),NA,None.
+I&S-01.1,I&S-01,Infrastructure Security,Infrastructure and Virtualization Security Policy and Procedures,AIC-Owned,Customer,NA,"Apply your own organization's policy for this control to the host, camera and event files of your deployment."
+I&S-01.2,I&S-01,Infrastructure Security,Infrastructure and Virtualization Security Policy and Procedures,AIC-Owned,Customer,NA,"Apply your own organization's policy for this control to the host, camera and event files of your deployment."
+I&S-02.1,I&S-02,Infrastructure Security,Capacity and Resource Planning,AIC-Owned,Customer,NA,Size the host for the camera pipeline.
+I&S-03.1,I&S-03,Infrastructure Security,Network Security,AIC-Owned,Customer,NA,Isolate the PoE camera on a trusted network segment; restrict who can reach it.
+I&S-03.2,I&S-03,Infrastructure Security,Network Security,AIC-Owned,Customer,NA,"Apply your own organization's policy for this control to the host, camera and event files of your deployment."
+I&S-04.1,I&S-04,Infrastructure Security,OS Hardening and Base Controls,AIC-Owned,Customer,NA,Harden the host OS.
+I&S-05.1,I&S-05,Infrastructure Security,Production and Non-Production Environments,ND,Not applicable (no owner),NA,Separate test and production deployments if you have both.
+I&S-05.2,I&S-05,Infrastructure Security,Production and Non-Production Environments,ND,Not applicable (no owner),NA,Sanitize event files before non-production use.
+I&S-06.1,I&S-06,Infrastructure Security,Segmentation and Segregation,AIC-Owned,Customer,NA,Separate deployments for different parties.
+I&S-07.1,I&S-07,Infrastructure Security,Migration to Hosted Environments,ND,Not applicable (no owner),NA,Use encrypted channels if you move event files.
+I&S-07.2,I&S-07,Infrastructure Security,Migration to Hosted Environments,ND,Not applicable (no owner),NA,Use current protocols.
+I&S-08.1,I&S-08,Infrastructure Security,Network Architecture Documentation,AIC-Owned,Customer,NA,Identify the camera network and event store as sensitive in your environment.
+I&S-09.1,I&S-09,Infrastructure Security,Network Defense,AIC-Owned,Customer,NA,Apply network defence to the host and camera network.
+LOG-01.1,LOG-01,Logging and Monitoring,Logging and Monitoring Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+LOG-01.2,LOG-01,Logging and Monitoring,Logging and Monitoring Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+LOG-02.1,LOG-02,Logging and Monitoring,Audit Logs Protection,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Back up and retain event files according to your policy.
+LOG-03.1,LOG-03,Logging and Monitoring,Security Monitoring and Alerting,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Monitor security events once emitted.
+LOG-03.2,LOG-03,Logging and Monitoring,Security Monitoring and Alerting,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Wire security alerts into your monitoring.
+LOG-04.1,LOG-04,Logging and Monitoring,Audit Logs Access and Accountability,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Restrict and record access to the events directory.
+LOG-05.1,LOG-05,Logging and Monitoring,Audit Logs Monitoring and Response,AIC-Owned,Customer,NA,Correlate oak-events and host logs in your own monitoring.
+LOG-05.2,LOG-05,Logging and Monitoring,Audit Logs Monitoring and Response,AIC-Owned,Customer,NA,Define your own anomaly response.
+LOG-06.1,LOG-06,Logging and Monitoring,Clock Synchronization,AIC-Owned,Customer,NA,Synchronize the host clock (NTP).
+LOG-07.1,LOG-07,Logging and Monitoring,Logging Scope,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Decide which events you keep and forward.
+LOG-07.2,LOG-07,Logging and Monitoring,Logging Scope,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+LOG-08.1,LOG-08,Logging and Monitoring,Audit Logs Sanitization,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Redact device ids before sharing event files. Use the DATA_FLOW.md section 5 recipe before sharing event files.
+LOG-09.1,LOG-09,Logging and Monitoring,Log Records,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Enable and retain the access log once available.
+LOG-10.1,LOG-10,Logging and Monitoring,Audit Records Protection,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Protect the events directory against modification and deletion.
+LOG-11.1,LOG-11,Logging and Monitoring,Encryption Monitoring and Reporting,ND,Not applicable (no owner),NA,None.
+LOG-12.1,LOG-12,Logging and Monitoring,Transaction/Activity Logging,ND,Not applicable (no owner),NA,None.
+LOG-13.1,LOG-13,Logging and Monitoring,Access Control Logs,ND,Not applicable (no owner),NA,Log physical access to your camera and host if needed.
+LOG-14.1,LOG-14,Logging and Monitoring,Failures and Anomalies Reporting,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Act on camera_health and camera events.
+LOG-14.2,LOG-14,Logging and Monitoring,Failures and Anomalies Reporting,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Wire the notifications to the people accountable.
+LOG-15.1,LOG-15,Logging and Monitoring,Input Monitoring,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Log agent tool calls in your MCP client if needed.
+LOG-16.1,LOG-16,Logging and Monitoring,Output Monitoring,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Retain the event files you need for audit.
+MDS-01.1,MDS-01,Model Security,Training Pipeline Security,MP-Owned,Model provider,NA,Choose models from providers with a secure training pipeline.
+MDS-01.2,MDS-01,Model Security,Training Pipeline Security,MP-Owned,Model provider,NA,As MDS-01.1.
+MDS-02.1,MDS-02,Model Security,Model Artifact Scanning,Shared Across the Supply Chain,Shared across the supply chain,NO,Verify the model file before use.
+MDS-02.2,MDS-02,Model Security,Model Artifact Scanning,Shared Across the Supply Chain,Shared across the supply chain,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+MDS-03.1,MDS-03,Model Security,Model Documentation,AP-Owned,CloudLab Works,YES,Document the model you deploy.
+MDS-03.2,MDS-03,Model Security,Model Documentation,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+MDS-04.1,MDS-04,Model Security,Model Documentation Requirements,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+MDS-05.1,MDS-05,Model Security,Model Documentation Validation,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+MDS-06.1,MDS-06,Model Security,Adversarial Attack Analysis,Shared Across the Supply Chain,Shared across the supply chain,YES,Assess adversarial risk at your site.
+MDS-07.1,MDS-07,Model Security,Robustness against Adversarial Attack / Model Hardening,Shared Across the Supply Chain,Shared across the supply chain,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+MDS-08.1,MDS-08,Model Security,Model Integrity Checks,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Pin and verify the model hash.
+MDS-08.2,MDS-08,Model Security,Model Integrity Checks,Shared AP-AIC,Shared: CloudLab Works and customer,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+MDS-09.1,MDS-09,Model Security,Model Signing/Ownership Verification,Shared Across the Supply Chain,Shared across the supply chain,NO,Load models only from trusted sources.
+MDS-10.1,MDS-10,Model Security,Model Continuous Monitoring,Shared AP-AIC,Shared: CloudLab Works and customer,NO,Spot-check detections on your scene.
+MDS-11.1,MDS-11,Model Security,Model Failure,AP-Owned,CloudLab Works,YES,Decide what a missed or false event means for your use case.
+MDS-11.2,MDS-11,Model Security,Model Failure,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Run under a supervisor and alert on camera_health.
+MDS-12.1,MDS-12,Model Security,Open Model Risk Assessment,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Assess the open model you choose. Assess the open model you choose; see MODEL_CARD.md section 5.
+MDS-12.2,MDS-12,Model Security,Open Model Risk Assessment,Shared AP-AIC,Shared: CloudLab Works and customer,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+MDS-13.1,MDS-13,Model Security,Secure Model Format,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Use NNArchive files from trusted sources.
+SEF-01.1,SEF-01,"Security Incident Management, E-Discovery, & Cloud Forensics",Security Incident Management Policy and Procedures,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-01.2,SEF-01,"Security Incident Management, E-Discovery, & Cloud Forensics",Security Incident Management Policy and Procedures,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-02.1,SEF-02,"Security Incident Management, E-Discovery, & Cloud Forensics",Service Management Policy and Procedures,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-02.2,SEF-02,"Security Incident Management, E-Discovery, & Cloud Forensics",Service Management Policy and Procedures,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-03.1,SEF-03,"Security Incident Management, E-Discovery, & Cloud Forensics",Incident Response Plans,AP-Owned,CloudLab Works,YES,Report suspected vulnerabilities privately as described in SECURITY.md (https://github.com/cloudlabworks/oak-events/blob/1732fbb/SECURITY.md); watch releases and CHANGELOG.md for fixes and upgrade promptly.
+SEF-04.1,SEF-04,"Security Incident Management, E-Discovery, & Cloud Forensics",Incident Response Testing,AP-Owned,CloudLab Works,NO,Handle incidents in your own deployment.
+SEF-05.1,SEF-05,"Security Incident Management, E-Discovery, & Cloud Forensics",Incident Response Metrics,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-06.1,SEF-06,"Security Incident Management, E-Discovery, & Cloud Forensics",Event Triage Processes,AP-Owned,CloudLab Works,YES,Report suspected vulnerabilities privately as described in SECURITY.md (https://github.com/cloudlabworks/oak-events/blob/1732fbb/SECURITY.md); watch releases and CHANGELOG.md for fixes and upgrade promptly.
+SEF-07.1,SEF-07,"Security Incident Management, E-Discovery, & Cloud Forensics",Incident Management and Response,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-07.2,SEF-07,"Security Incident Management, E-Discovery, & Cloud Forensics",Incident Management and Response,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-08.1,SEF-08,"Security Incident Management, E-Discovery, & Cloud Forensics",Security Breach Notification,AP-Owned,CloudLab Works,YES,Report suspected vulnerabilities privately as described in SECURITY.md (https://github.com/cloudlabworks/oak-events/blob/1732fbb/SECURITY.md); watch releases and CHANGELOG.md for fixes and upgrade promptly.
+SEF-08.2,SEF-08,"Security Incident Management, E-Discovery, & Cloud Forensics",Security Breach Notification,AP-Owned,CloudLab Works,YES,Report suspected vulnerabilities privately as described in SECURITY.md (https://github.com/cloudlabworks/oak-events/blob/1732fbb/SECURITY.md); watch releases and CHANGELOG.md for fixes and upgrade promptly.
+SEF-09.1,SEF-09,"Security Incident Management, E-Discovery, & Cloud Forensics",Incident Records Management,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-09.2,SEF-09,"Security Incident Management, E-Discovery, & Cloud Forensics",Incident Records Management,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-10.1,SEF-10,"Security Incident Management, E-Discovery, & Cloud Forensics",Points of Contact Maintenance,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+SEF-10.2,SEF-10,"Security Incident Management, E-Discovery, & Cloud Forensics",Points of Contact Maintenance,AP-Owned,CloudLab Works,YES,Handle incidents in your own deployment.
+STA-01.1,STA-01,"Supply Chain Management, Transparency, and Accountability",Supply Chain Risk Management Policies and Procedures,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-01.2,STA-01,"Supply Chain Management, Transparency, and Accountability",Supply Chain Risk Management Policies and Procedures,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-02.1,STA-02,"Supply Chain Management, Transparency, and Accountability",SSRM Policy and Procedures,AP-Owned,CloudLab Works,NO,Read the shared-responsibility guide and implement the customer-owned controls.
+STA-02.2,STA-02,"Supply Chain Management, Transparency, and Accountability",SSRM Policy and Procedures,AP-Owned,CloudLab Works,NO,Read the shared-responsibility guide and implement the customer-owned controls.
+STA-03.1,STA-03,"Supply Chain Management, Transparency, and Accountability",SSRM Supply Chain,AP-Owned,CloudLab Works,NO,Read the shared-responsibility guide and implement the customer-owned controls.
+STA-04.1,STA-04,"Supply Chain Management, Transparency, and Accountability",SSRM Guidance,AP-Owned,CloudLab Works,NO,Read the shared-responsibility guide and implement the customer-owned controls.
+STA-05.1,STA-05,"Supply Chain Management, Transparency, and Accountability",SSRM Control Ownership,AP-Owned,CloudLab Works,NO,Read the shared-responsibility guide and implement the customer-owned controls.
+STA-06.1,STA-06,"Supply Chain Management, Transparency, and Accountability",SSRM Documentation Review,AP-Owned,CloudLab Works,NO,Read the shared-responsibility guide and implement the customer-owned controls.
+STA-07.1,STA-07,"Supply Chain Management, Transparency, and Accountability",SSRM Control Implementation,AP-Owned,CloudLab Works,NO,Read the shared-responsibility guide and implement the customer-owned controls.
+STA-08.1,STA-08,"Supply Chain Management, Transparency, and Accountability",Supply Chain Inventory,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-09.1,STA-09,"Supply Chain Management, Transparency, and Accountability",Service Bill of Material (BOM),AP-Owned,CloudLab Works,YES,Use the SBOM in your own vulnerability management.
+STA-09.2,STA-09,"Supply Chain Management, Transparency, and Accountability",Service Bill of Material (BOM),AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-10.1,STA-10,"Supply Chain Management, Transparency, and Accountability",Supply Chain Risk Management,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-11.1,STA-11,"Supply Chain Management, Transparency, and Accountability",Primary Service and Contractual Agreement,ND,Not applicable (no owner),NA,Set your own agreements with any provider you use.
+STA-12.1,STA-12,"Supply Chain Management, Transparency, and Accountability",Supply Chain Agreement Review,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-13.1,STA-13,"Supply Chain Management, Transparency, and Accountability",Supply Chain Compliance Assessment,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-14.1,STA-14,"Supply Chain Management, Transparency, and Accountability",Supply Chain Service Agreement Compliance,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-15.1,STA-15,"Supply Chain Management, Transparency, and Accountability",Supply Chain Governance Review,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+STA-16.1,STA-16,"Supply Chain Management, Transparency, and Accountability",Supply Chain Data Security Assessment,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-01.1,TVM-01,Threat & Vulnerability Management,Threat and Vulnerability Management Policy and Procedures,AP-Owned,CloudLab Works,YES,Report suspected vulnerabilities privately as described in SECURITY.md (https://github.com/cloudlabworks/oak-events/blob/1732fbb/SECURITY.md); watch releases and CHANGELOG.md for fixes and upgrade promptly.
+TVM-01.2,TVM-01,Threat & Vulnerability Management,Threat and Vulnerability Management Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-02.1,TVM-02,Threat & Vulnerability Management,Malware and Malicious Instructions Protection Policy and Procedures,AP-Owned,CloudLab Works,YES,"Treat tool output as data, not instructions, in your agent. Tell your agent that oak-events tool output is untrusted data."
+TVM-02.2,TVM-02,Threat & Vulnerability Management,Malware and Malicious Instructions Protection Policy and Procedures,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-03.1,TVM-03,Threat & Vulnerability Management,Vulnerability Identification,AP-Owned,CloudLab Works,YES,Scan your own host and installed packages.
+TVM-04.1,TVM-04,Threat & Vulnerability Management,Threat Analysis and Modelling,AP-Owned,CloudLab Works,YES,"Threat-model your deployment (camera placement, network, agent)."
+TVM-04.2,TVM-04,Threat & Vulnerability Management,Threat Analysis and Modelling,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-05.1,TVM-05,Threat & Vulnerability Management,Detection Updates,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-06.1,TVM-06,Threat & Vulnerability Management,External Library Vulnerabilities,AP-Owned,CloudLab Works,YES,Update your installed copy when a release updates dependencies.
+TVM-07.1,TVM-07,Threat & Vulnerability Management,Penetration Testing,AP-Owned,CloudLab Works,NO,Penetration-test your own deployment if required.
+TVM-08.1,TVM-08,Threat & Vulnerability Management,Vulnerability Remediation Schedule,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-09.1,TVM-09,Threat & Vulnerability Management,Vulnerability Prioritization,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-10.1,TVM-10,Threat & Vulnerability Management,Threat Response,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-11.1,TVM-11,Threat & Vulnerability Management,Vulnerability Management Reporting,AP-Owned,CloudLab Works,YES,Report suspected vulnerabilities privately as described in SECURITY.md (https://github.com/cloudlabworks/oak-events/blob/1732fbb/SECURITY.md); watch releases and CHANGELOG.md for fixes and upgrade promptly.
+TVM-12.1,TVM-12,Threat & Vulnerability Management,Vulnerability Management Metrics,AP-Owned,CloudLab Works,YES,No customer action for this control; it concerns CloudLab Works' own practices.
+TVM-13.1,TVM-13,Threat & Vulnerability Management,Guardrails,Shared AP-AIC,Shared: CloudLab Works and customer,YES,Add guardrails in your agent runtime for actions taken on events.
+TVM-13.2,TVM-13,Threat & Vulnerability Management,Guardrails,AP-Owned,CloudLab Works,NO,No customer action for this control; it concerns CloudLab Works' own practices.
+UEM-01.1,UEM-01,Universal Endpoint Management,Endpoint Devices Policy and Procedures,AP-Owned,CloudLab Works,YES,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-01.2,UEM-01,Universal Endpoint Management,Endpoint Devices Policy and Procedures,AP-Owned,CloudLab Works,YES,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-02.1,UEM-02,Universal Endpoint Management,Application and Service Approval,AP-Owned,CloudLab Works,YES,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-03.1,UEM-03,Universal Endpoint Management,Compatibility,Shared AP-AIC,Shared: CloudLab Works and customer,YES,"Check your OS, Python and camera against the supported list."
+UEM-04.1,UEM-04,Universal Endpoint Management,Endpoint Inventory,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-05.1,UEM-05,Universal Endpoint Management,Endpoint Management,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-06.1,UEM-06,Universal Endpoint Management,Automatic Lock Screen,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-07.1,UEM-07,Universal Endpoint Management,Operating Systems,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-08.1,UEM-08,Universal Endpoint Management,Storage Encryption,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-09.1,UEM-09,Universal Endpoint Management,Anti-Malware Detection and Prevention,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-10.1,UEM-10,Universal Endpoint Management,Software Firewall,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-11.1,UEM-11,Universal Endpoint Management,Data Loss Prevention,ND,Not applicable (no owner),NA,Apply DLP to hosts holding event files if your risk assessment requires it.
+UEM-12.1,UEM-12,Universal Endpoint Management,Remote Locate,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-13.1,UEM-13,Universal Endpoint Management,Remote Wipe,AP-Owned,CloudLab Works,NO,"Manage your own hosts that store event files (encryption, patching, lock screen)."
+UEM-14.1,UEM-14,Universal Endpoint Management,Third-Party Endpoint Security Posture,ND,Not applicable (no owner),NA,None.
