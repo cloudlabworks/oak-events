@@ -2,6 +2,7 @@
 
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/cloudlabworks/oak-events/badge)](https://scorecard.dev/viewer/?uri=github.com/cloudlabworks/oak-events)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16204/badge)](https://www.bestpractices.dev/projects/16204)
+[![PyPI](https://img.shields.io/pypi/v/oak-events)](https://pypi.org/project/oak-events/)
 
 Privacy-first events from Luxonis OAK cameras for AI agents.
 
